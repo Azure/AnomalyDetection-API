@@ -11,7 +11,7 @@
         "mlWebSvcWebJobName": "AzureMlWebSvc",
         "mlWsApiVersion": "2016-05-01-preview",
         "planName": "[concat(variables('uniqueNamePrefix'),'plan')]",
-        "planSkuName": "S2",
+        "planSkuName": "DevTest",
         "planSkuTier": "Standard",
         "mlWebServiceName": "[concat(variables('uniqueNamePrefix'),'scoremlwebsvc')]",
         "mlWebserviceTitle": "[concat(variables('uniqueNamePrefix'),'scoremlwebsvc')]",
