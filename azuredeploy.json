@@ -1,15 +1,6 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "mLParams": {
-            "metadata": {
-                "description": "Input parameters for Anomaly Detection API"
-            },
-            "type": "string",
-            "defaultValue": "{\"tspikedetector.sensitivity\":\"3\",\"zspikedetector.sensitivity\":\"3\",\"trenddetector.sensitivity\":\"3.25\",\"bileveldetector.sensitivity\":\"3.25\"}"
-        }
-    },
     "variables": {
         "namePrefix": "[resourceGroup().name]",
         "uniqueNamePrefix": "[concat(variables('namePrefix'), uniqueString(subscription().subscriptionId))]",
@@ -27,8 +18,7 @@
         "webserviceDescription": "Anomaly Detection Machine Learning Service",
         "mlSeasonalityWebServiceName": "[concat(variables('uniqueNamePrefix'),'seasonalitymlwebsvc')]",
         "mlSeasonalityWebServiceTitle": "[concat(variables('uniqueNamePrefix'),'seasonalitymlwebsvc')]",
-        "seasonalityWebserviceDescription": "Anomaly Detection with Seasonality Machine Learning Service",
-        "readOnly": ""
+        "seasonalityWebserviceDescription": "Anomaly Detection with Seasonality Machine Learning Service"
     },
     "resources": [
         {
