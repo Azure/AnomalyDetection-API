@@ -1,0 +1,1695 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "mLParams": {
+            "metadata": {
+                "description": "Input parameters for Anomaly Detection API"
+            },
+            "type": "string",
+            "defaultValue": "{\"tspikedetector.sensitivity\":\"3\",\"zspikedetector.sensitivity\":\"3\",\"trenddetector.sensitivity\":\"3.25\",\"bileveldetector.sensitivity\":\"3.25\"}"
+        },
+        "siteLocation": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "namePrefix": "[resourceGroup().name]",
+        "uniqueNamePrefix": "[concat(variables('namePrefix'), uniqueString(subscription().subscriptionId))]",
+        "stgVersion": "2015-06-15",
+        "storageAccountName": "[variables('uniqueNamePrefix')]",
+        "storageAccountNameToLower": "[toLower(variables('storageAccountName'))]",
+        "storageAccountType": "Standard_LRS",
+        "mlWebSvcWebJobName": "AzureMlWebSvc",
+        "mlWsApiVersion": "2016-05-01-preview",
+        "planName": "[concat(variables('uniqueNamePrefix'),'plan')]",
+        "planSkuName": "S2",
+        "planSkuTier": "Standard",
+        "mlWebServiceName": "[concat(variables('uniqueNamePrefix'),'scoremlwebsvc')]",
+        "mlWebserviceTitle": "[concat(variables('uniqueNamePrefix'),'scoremlwebsvc')]",
+        "webserviceDescription": "Anomaly Detection Machine Learning Service",
+        "mlSeasonalityWebServiceName": "[concat(variables('uniqueNamePrefix'),'seasonalitymlwebsvc')]",
+        "mlSeasonalityWebServiceTitle": "[concat(variables('uniqueNamePrefix'),'seasonalitymlwebsvc')]",
+        "seasonalityWebserviceDescription": "Anomaly Detection with Seasonality Machine Learning Service",
+        "readOnly": ""
+    },
+    "resources": [
+        {
+            "name": "[variables('storageAccountNameToLower')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "location": "[parameters('siteLocation')]",
+            "apiVersion": "[variables('stgVersion')]",
+            "dependsOn": [ ],
+            "properties": {
+                "accountType": "[variables('storageAccountType')]"
+            }
+        },
+        {
+            "apiVersion": "[variables('mlWsApiVersion')]",
+            "name": "[variables('planName')]",
+            "type": "Microsoft.MachineLearning/CommitmentPlans",
+            "location": "[parameters('siteLocation')]",
+            "sku": {
+                "name": "[variables('planSkuName')]",
+                "tier": "[variables('planSkuTier')]",
+                "capacity": "1"
+            },
+            "properties": {
+
+            }
+        },
+        {
+            "apiVersion": "[variables('mlWsApiVersion')]",
+            "name": "[variables('mlWebServiceName')]",
+            "type": "Microsoft.MachineLearning/webservices",
+            "location": "[parameters('siteLocation')]",
+            "dependsOn": [
+                "[concat('Microsoft.MachineLearning/CommitmentPlans/', variables('planName'))]",
+                "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountNameToLower'))]"
+            ],
+            "properties": {
+                "title": "[variables('mlWebserviceTitle')]",
+                "description": "[variables('webserviceDescription')]",
+                "commitmentPlan": {
+                    "id": "[resourceId('Microsoft.MachineLearning/CommitmentPlans', variables('planName'))]"
+                },
+                "StorageAccount": {
+                    "name": "[variables('storageAccountNameToLower')]",
+                    "key": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountNameToLower')), '2015-06-15').key1]"
+                },
+                "MachineLearningWorkspace": {
+                    "Id": "3a4a8c0191ee462fa185189f3ecd1799"
+                },
+                 "Assets":  {
+                                      "asset1":  {
+                                                     "Name":  "Tail Join",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_74d0a3ae250842358a1a235529e74ccd.zip?sv=2015-02-21\u0026sr=b\u0026sig=FQOXnVCjZO7MJimJPjQHWawEFSHGDttbRewlbuPXmRc%3D\u0026se=2016-12-30T21%3A23%3A47Z\u0026sp=r",
+                                                                          "Credentials":  ""
+                                                                      },
+                                                     "InputPorts":  {
+                                                                        "data_in1":  {
+                                                                                         "Type":  "Dataset"
+                                                                                     },
+                                                                        "data_in2":  {
+                                                                                         "Type":  "Dataset"
+                                                                                     },
+                                                                        "data_in3":  {
+                                                                                         "Type":  "Dataset"
+                                                                                     },
+                                                                        "data_in4":  {
+                                                                                         "Type":  "Dataset"
+                                                                                     },
+                                                                        "data_in5":  {
+                                                                                         "Type":  "Dataset"
+                                                                                     }
+                                                                    },
+                                                     "OutputPorts":  {
+                                                                         "data_out":  {
+                                                                                          "Type":  "Dataset"
+                                                                                      }
+                                                                     },
+                                                     "Id":  "3a4a8c0191ee462fa185189f3ecd1799.80d70f92a27f424b88b3e62df9acfbfb.v1-default-140",
+                                                     "Parameters":  [
+                                                                        {
+                                                                            "Name":  "col",
+                                                                            "ParameterType":  "ColumnPicker"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "tailRows",
+                                                                            "ParameterType":  "Int"
+                                                                        }
+                                                                    ],
+                                                     "Metadata":  {
+                                                                      "UseDrawBridge":  null,
+                                                                      "runTimeVersionId":  "6.0",
+                                                                      "InterfaceString":  "/dll \"e331813e47604557aae324c8939c4985, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.Custom._80d70f92a27f424b88b3e62df9acfbfb.Dll.CustomModule;Run\" /Output0 {out:Dataset:data_out} /data_in1 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in1} /data_in2 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in2} [ /data_in3 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in3} ] [ /data_in4 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in4} ] [ /data_in5 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in5} ] /col \"(col:columnpicker,data_in1,False,All,None)\" /tailRows \"(tailRows:int,0,10000:default,0)\" ",
+                                                                      "Description":  "Join AD datasets by a column, and return all or user specified number of rows",
+                                                                      "hostVersionId":  "3.1.0",
+                                                                      "host":  "R",
+                                                                      "FamilyId":  "80d70f92a27f424b88b3e62df9acfbfb"
+                                                                  },
+                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_74d0a3ae250842358a1a235529e74ccd.zip?sv=2015-02-21\u0026sr=b\u0026sig=FQOXnVCjZO7MJimJPjQHWawEFSHGDttbRewlbuPXmRc%3D\u0026se=2016-12-30T21%3A23%3A47Z\u0026sp=r"
+                                                 },
+                                      "asset2":  {
+                                                     "Name":  "Select Columns in Dataset",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "aml://module/506153734175476c4f62416c57734963.1ec722fab6234e26a44ea50c6d726223.v1-default-1730",
+                                                                          "Credentials":  ""
+                                                                      }
+                                                 },
+                                      "asset3":  {
+                                                     "Name":  "Edit Metadata",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "aml://module/506153734175476c4f62416c57734963.370b6676c11c486fbf7335349f842a66.v1-default-1729",
+                                                                          "Credentials":  ""
+                                                                      }
+                                                 },
+                                      "asset4":  {
+                                                     "Name":  "test.csv",
+                                                     "Type":  "Resource",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "https://corpwsstorage.blob.core.windows.net/uploadedresources/a0f433c37efd41d59950cf19b7859fb6.csv?sv=2015-02-21\u0026sr=b\u0026sig=XG85sJ%2BTBLWjeuW2%2B%2F0GE0eeRfkp279v3krRRybyKrI%3D\u0026se=2016-12-30T21%3A23%3A48Z\u0026sp=r",
+                                                                          "Credentials":  ""
+                                                                      },
+                                                     "OutputPorts":  {
+                                                                         "Results dataset":  {
+                                                                                                 "Type":  "Dataset"
+                                                                                             }
+                                                                     }
+                                                 },
+                                      "asset5":  {
+                                                     "Name":  "SpikeDetector",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_c0983bc7e2514bc58065dd0ff2261dbf.zip?sv=2015-02-21\u0026sr=b\u0026sig=JZ1Cw4raJ8nQRx8V3PRUyUreeXqSxiG2nMDS7K4g%2B2s%3D\u0026se=2016-12-30T21%3A23%3A48Z\u0026sp=r",
+                                                                          "Credentials":  ""
+                                                                      },
+                                                     "InputPorts":  {
+                                                                        "data":  {
+                                                                                     "Type":  "Dataset"
+                                                                                 }
+                                                                    },
+                                                     "OutputPorts":  {
+                                                                         "spikesORdips":  {
+                                                                                              "Type":  "Dataset"
+                                                                                          }
+                                                                     },
+                                                     "Id":  "3a4a8c0191ee462fa185189f3ecd1799.3370ffac732040ed9c366f3094d85fa1.v1-default-162",
+                                                     "Parameters":  [
+                                                                        {
+                                                                            "Name":  "Data column",
+                                                                            "ParameterType":  "ColumnPicker"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Tukey Threshold",
+                                                                            "ParameterType":  "Double"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Zscore Threshold",
+                                                                            "ParameterType":  "Double"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Detect Spike or Dip",
+                                                                            "ParameterType":  "Enumerated",
+                                                                            "ModeValuesInfo":  {
+                                                                                                   "Spikes":  {
+                                                                                                                  "InterfaceString":  "",
+                                                                                                                  "Parameters":  [
+
+                                                                                                                                 ]
+                                                                                                              },
+                                                                                                   "Dips":  {
+                                                                                                                "InterfaceString":  "",
+                                                                                                                "Parameters":  [
+
+                                                                                                                               ]
+                                                                                                            },
+                                                                                                   "Both":  {
+                                                                                                                "InterfaceString":  "",
+                                                                                                                "Parameters":  [
+
+                                                                                                                               ]
+                                                                                                            }
+                                                                                               }
+                                                                        }
+                                                                    ],
+                                                     "Metadata":  {
+                                                                      "UseDrawBridge":  null,
+                                                                      "runTimeVersionId":  "6.0",
+                                                                      "InterfaceString":  "/dll \"SpikeDetector, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;AnomalyDetection.AnomalyDetectionModules;SpikeDetector\" /Output0 {out:Dataset:spikesORdips} /dataTable {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data} /dataCol \"(Data column:columnpicker,data,True,All,)\" /tukeyThresh \"(Tukey Threshold:double,1,20:default,3)\" /zscoreThresh \"(Zscore Threshold:double,1,20:default,3)\" /spikeOrDip \"(Detect Spike or Dip:enum,Spikes,Dips,Both:default,Both)\" ",
+                                                                      "Description":  "Detect the spikes or dips in incoming dataset",
+                                                                      "hostVersionId":  "4.5.0",
+                                                                      "host":  "DotNet",
+                                                                      "FamilyId":  "3370ffac732040ed9c366f3094d85fa1"
+                                                                  },
+                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_c0983bc7e2514bc58065dd0ff2261dbf.zip?sv=2015-02-21\u0026sr=b\u0026sig=JZ1Cw4raJ8nQRx8V3PRUyUreeXqSxiG2nMDS7K4g%2B2s%3D\u0026se=2016-12-30T21%3A23%3A48Z\u0026sp=r"
+                                                 },
+                                      "asset6":  {
+                                                     "Name":  "Change Detection",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_d15782bb423a402db6fb9e173fc58be5.zip?sv=2015-02-21\u0026sr=b\u0026sig=YCnS42awGoLWwnLCHK7h7RQIzCTRR10fHe6geCKQmbo%3D\u0026se=2016-12-30T21%3A23%3A48Z\u0026sp=r",
+                                                                          "Credentials":  ""
+                                                                      },
+                                                     "InputPorts":  {
+                                                                        "input":  {
+                                                                                      "Type":  "Dataset"
+                                                                                  }
+                                                                    },
+                                                     "OutputPorts":  {
+                                                                         "table":  {
+                                                                                       "Type":  "Dataset"
+                                                                                   }
+                                                                     },
+                                                     "Id":  "3a4a8c0191ee462fa185189f3ecd1799.ce9d2d92ebfd437193aa1a6238f20a4d.v1-default-171",
+                                                     "Parameters":  [
+                                                                        {
+                                                                            "Name":  "Data column",
+                                                                            "ParameterType":  "ColumnPicker"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Time column",
+                                                                            "ParameterType":  "ColumnPicker"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Martingale",
+                                                                            "ParameterType":  "Mode",
+                                                                            "ModeValuesInfo":  {
+                                                                                                   "Power":  {
+                                                                                                                 "InterfaceString":  "/dll \"ChangeDetection, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.ChangeDetection;EntryPoint\" /Output0 {out:Dataset:table} /inputData {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:input} /dataColumn \"(Data column:columnpicker,input,True,All,)\" /timeColumn \"(Time column:columnpicker,input,True,All,)\" /martingale \"(Martingale:enum,Power,PowerAvg:default,PowerAvg)\" /strangeness \"(Strangeness:enum,DistanceBased,Percentile,RangePercentile,Median,SlowPosTrend,SlowNegTrend:default,RangePercentile)\" /martingaleHistory \"(Martingale history:int,10,1000:default,500)\" /strangenessHistory \"(Strangeness history:int,10,1000:default,500)\" /thresh \"(Alert threshold:double,0,100:default,3.25)\" /epsilon \"(Epsilon:double,0,1:default,0.9)\" ",
+                                                                                                                 "Parameters":  [
+                                                                                                                                    {
+                                                                                                                                        "Name":  "Epsilon",
+                                                                                                                                        "ParameterType":  "Double"
+                                                                                                                                    }
+                                                                                                                                ]
+                                                                                                             },
+                                                                                                   "PowerAvg":  {
+                                                                                                                    "InterfaceString":  "/dll \"ChangeDetection, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.ChangeDetection;EntryPoint\" /Output0 {out:Dataset:table} /inputData {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:input} /dataColumn \"(Data column:columnpicker,input,True,All,)\" /timeColumn \"(Time column:columnpicker,input,True,All,)\" /martingale \"(Martingale:enum,Power,PowerAvg:default,PowerAvg)\" /strangeness \"(Strangeness:enum,DistanceBased,Percentile,RangePercentile,Median,SlowPosTrend,SlowNegTrend:default,RangePercentile)\" /martingaleHistory \"(Martingale history:int,10,1000:default,500)\" /strangenessHistory \"(Strangeness history:int,10,1000:default,500)\" /thresh \"(Alert threshold:double,0,100:default,3.25)\" ",
+                                                                                                                    "Parameters":  [
+
+                                                                                                                                   ]
+                                                                                                                }
+                                                                                               }
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Strangeness",
+                                                                            "ParameterType":  "Enumerated",
+                                                                            "ModeValuesInfo":  {
+                                                                                                   "DistanceBased":  {
+                                                                                                                         "InterfaceString":  "",
+                                                                                                                         "Parameters":  [
+
+                                                                                                                                        ]
+                                                                                                                     },
+                                                                                                   "Percentile":  {
+                                                                                                                      "InterfaceString":  "",
+                                                                                                                      "Parameters":  [
+
+                                                                                                                                     ]
+                                                                                                                  },
+                                                                                                   "RangePercentile":  {
+                                                                                                                           "InterfaceString":  "",
+                                                                                                                           "Parameters":  [
+
+                                                                                                                                          ]
+                                                                                                                       },
+                                                                                                   "Median":  {
+                                                                                                                  "InterfaceString":  "",
+                                                                                                                  "Parameters":  [
+
+                                                                                                                                 ]
+                                                                                                              },
+                                                                                                   "SlowPosTrend":  {
+                                                                                                                        "InterfaceString":  "",
+                                                                                                                        "Parameters":  [
+
+                                                                                                                                       ]
+                                                                                                                    },
+                                                                                                   "SlowNegTrend":  {
+                                                                                                                        "InterfaceString":  "",
+                                                                                                                        "Parameters":  [
+
+                                                                                                                                       ]
+                                                                                                                    }
+                                                                                               }
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Martingale history",
+                                                                            "ParameterType":  "Int"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Strangeness history",
+                                                                            "ParameterType":  "Int"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Alert threshold",
+                                                                            "ParameterType":  "Double"
+                                                                        }
+                                                                    ],
+                                                     "Metadata":  {
+                                                                      "UseDrawBridge":  null,
+                                                                      "runTimeVersionId":  "6.0",
+                                                                      "InterfaceString":  "/dll \"ChangeDetection, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.ChangeDetection;EntryPoint\" /Output0 {out:Dataset:table} /inputData {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:input} /dataColumn \"(Data column:columnpicker,input,True,All,)\" /timeColumn \"(Time column:columnpicker,input,True,All,)\" /martingale \"(Martingale:enum,Power,PowerAvg:default,PowerAvg)\" /strangeness \"(Strangeness:enum,DistanceBased,Percentile,RangePercentile,Median,SlowPosTrend,SlowNegTrend:default,RangePercentile)\" /martingaleHistory \"(Martingale history:int,10,1000:default,500)\" /strangenessHistory \"(Strangeness history:int,10,1000:default,500)\" /epsilon \"(Epsilon:double,0,1:default,0.9)\" /thresh \"(Alert threshold:double,0,100:default,3.25)\" ",
+                                                                      "Description":  "Detects anomalies in the input time series. Returns anomaly score and alert indicator",
+                                                                      "hostVersionId":  "4.5.0",
+                                                                      "host":  "DotNet",
+                                                                      "FamilyId":  "ce9d2d92ebfd437193aa1a6238f20a4d"
+                                                                  },
+                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_d15782bb423a402db6fb9e173fc58be5.zip?sv=2015-02-21\u0026sr=b\u0026sig=YCnS42awGoLWwnLCHK7h7RQIzCTRR10fHe6geCKQmbo%3D\u0026se=2016-12-30T21%3A23%3A48Z\u0026sp=r"
+                                                 }
+                                  },
+                       "Parameters":  {
+                                          "postprocess.tailRows":  "0",
+                                          "tspikedetector.sensitivity":  "3",
+                                          "zspikedetector.sensitivity":  "3",
+                                          "detectors.historywindow":  "500",
+                                          "bileveldetector.sensitivity":  "3.25",
+                                          "trenddetector.sensitivity":  "3.25",
+                                          "detectors.spikesdips":  "Both"
+                                      },
+                       "Input":  {
+                                     "Title":  "",
+                                     "Description":  "",
+                                     "Type":  "object",
+                                     "Properties":  {
+                                                        "input1":  {
+                                                                       "Title":  "",
+                                                                       "Description":  "",
+                                                                       "Type":  "object",
+                                                                       "Properties":  {
+                                                                                          "Time":  {
+                                                                                                       "Type":  "String",
+                                                                                                       "Format":  "Date-time",
+                                                                                                       "x-ms-isnullable":  false
+                                                                                                   },
+                                                                                          "Data":  {
+                                                                                                       "Type":  "Number",
+                                                                                                       "Format":  "Double",
+                                                                                                       "x-ms-isnullable":  false
+                                                                                                   }
+                                                                                      }
+                                                                   }
+                                                    }
+                                 },
+                       "Output":  {
+                                      "Title":  "",
+                                      "Description":  "",
+                                      "Type":  "object",
+                                      "Properties":  {
+                                                         "output1":  {
+                                                                         "Title":  "",
+                                                                         "Description":  "",
+                                                                         "Type":  "object",
+                                                                         "Properties":  {
+                                                                                            "Time":  {
+                                                                                                         "Type":  "String",
+                                                                                                         "Format":  "Date-time",
+                                                                                                         "x-ms-isnullable":  false
+                                                                                                     },
+                                                                                            "Data":  {
+                                                                                                         "Type":  "Number",
+                                                                                                         "Format":  "Double",
+                                                                                                         "x-ms-isnullable":  false
+                                                                                                     },
+                                                                                            "TSpike":  {
+                                                                                                           "Type":  "Number",
+                                                                                                           "Format":  "Double",
+                                                                                                           "x-ms-isnullable":  false
+                                                                                                       },
+                                                                                            "ZSpike":  {
+                                                                                                           "Type":  "Number",
+                                                                                                           "Format":  "Double",
+                                                                                                           "x-ms-isnullable":  false
+                                                                                                       },
+                                                                                            "rpscore":  {
+                                                                                                            "Type":  "Number",
+                                                                                                            "Format":  "Double",
+                                                                                                            "x-ms-isnullable":  false
+                                                                                                        },
+                                                                                            "rpalert":  {
+                                                                                                            "Type":  "Integer",
+                                                                                                            "Format":  "Int32",
+                                                                                                            "x-ms-isnullable":  false
+                                                                                                        },
+                                                                                            "tscore":  {
+                                                                                                           "Type":  "Number",
+                                                                                                           "Format":  "Double",
+                                                                                                           "x-ms-isnullable":  false
+                                                                                                       },
+                                                                                            "talert":  {
+                                                                                                           "Type":  "Integer",
+                                                                                                           "Format":  "Int32",
+                                                                                                           "x-ms-isnullable":  false
+                                                                                                       }
+                                                                                        }
+                                                                     }
+                                                     }
+                                  },
+                       "packageType":  "Graph",
+                       "Package":  {
+                                       "Nodes":  {
+                                                     "node1":  {
+                                                                   "AssetId":  "asset1",
+                                                                   "Parameters":  {
+                                                                                      "col":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+                                                                                      "tailRows":  "0"
+                                                                                  }
+                                                               },
+                                                     "node2":  {
+                                                                   "AssetId":  "asset2",
+                                                                   "Parameters":  {
+                                                                                      "Select Columns":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%2C%22Data.x%22%2C%22TSpike%22%2C%22ZSpike%22%2C%22Martingale.values.x%22%2C%22Alert.indicator.x%22%2C%22Martingale.values.y%22%2C%22Alert.indicator.y%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D"
+                                                                                  }
+                                                               },
+                                                     "node3":  {
+                                                                   "AssetId":  "asset3",
+                                                                   "Parameters":  {
+                                                                                      "Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Data Type":  "DateTime",
+                                                                                      "Categorical":  "Unchanged",
+                                                                                      "Fields":  "Unchanged"
+                                                                                  }
+                                                               },
+                                                     "node4":  {
+                                                                   "AssetId":  "asset3",
+                                                                   "Parameters":  {
+                                                                                      "Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data.x%22%2C%22Martingale.values.x%22%2C%22Alert.indicator.x%22%2C%22Martingale.values.y%22%2C%22Alert.indicator.y%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+                                                                                      "Data Type":  "Unchanged",
+                                                                                      "Categorical":  "Unchanged",
+                                                                                      "Fields":  "Unchanged",
+                                                                                      "New Column Name":  "Data, rpscore, rpalert, tscore, talert"
+                                                                                  }
+                                                               },
+                                                     "node5":  {
+                                                                   "AssetId":  "asset5",
+                                                                   "Parameters":  {
+                                                                                      "Data column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Tukey Threshold":  "5",
+                                                                                      "Zscore Threshold":  "5",
+                                                                                      "Detect Spike or Dip":  "Both"
+                                                                                  }
+                                                               },
+                                                     "node6":  {
+                                                                   "AssetId":  "asset6",
+                                                                   "Parameters":  {
+                                                                                      "Data column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Time column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Martingale":  "PowerAvg",
+                                                                                      "Strangeness":  "RangePercentile",
+                                                                                      "Martingale history":  "500",
+                                                                                      "Strangeness history":  "500",
+                                                                                      "Alert threshold":  "3.25"
+                                                                                  }
+                                                               },
+                                                     "node7":  {
+                                                                   "AssetId":  "asset6",
+                                                                   "Parameters":  {
+                                                                                      "Data column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Time column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Martingale":  "PowerAvg",
+                                                                                      "Strangeness":  "SlowPosTrend",
+                                                                                      "Martingale history":  "500",
+                                                                                      "Strangeness history":  "500",
+                                                                                      "Alert threshold":  "3.25"
+                                                                                  }
+                                                               },
+                                                     "node8":  {
+                                                                   "AssetId":  "asset4"
+                                                               },
+                                                     "node9":  {
+                                                                   "InputId":  "input1"
+                                                               },
+                                                     "node10":  {
+                                                                    "OutputId":  "output1"
+                                                                }
+                                                 },
+                                       "Edges":  [
+                                                     {
+                                                         "SourceNodeId":  "node1",
+                                                         "SourcePortId":  "data_out",
+                                                         "TargetNodeId":  "node2",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node2",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node4",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node3",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node5",
+                                                         "TargetPortId":  "data"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node3",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node6",
+                                                         "TargetPortId":  "input"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node3",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node7",
+                                                         "TargetPortId":  "input"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node5",
+                                                         "SourcePortId":  "spikesORdips",
+                                                         "TargetNodeId":  "node1",
+                                                         "TargetPortId":  "data_in1"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node6",
+                                                         "SourcePortId":  "table",
+                                                         "TargetNodeId":  "node1",
+                                                         "TargetPortId":  "data_in2"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node7",
+                                                         "SourcePortId":  "table",
+                                                         "TargetNodeId":  "node1",
+                                                         "TargetPortId":  "data_in3"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node8",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node3",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node9",
+                                                         "TargetNodeId":  "node3",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node4",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node10"
+                                                     }
+                                                 ],
+                                       "GraphParameters":  {
+                                                               "postprocess.tailRows":  {
+                                                                                            "Type":  "Int",
+                                                                                            "Description":  "postprocess.tailRows",
+                                                                                            "Links":  [
+                                                                                                          {
+                                                                                                              "NodeId":  "node1",
+                                                                                                              "ParameterKey":  "tailRows"
+                                                                                                          }
+                                                                                                      ]
+                                                                                        },
+                                                               "tspikedetector.sensitivity":  {
+                                                                                                  "Type":  "Double",
+                                                                                                  "Description":  "tspikedetector.sensitivity",
+                                                                                                  "Links":  [
+                                                                                                                {
+                                                                                                                    "NodeId":  "node5",
+                                                                                                                    "ParameterKey":  "Tukey Threshold"
+                                                                                                                }
+                                                                                                            ]
+                                                                                              },
+                                                               "zspikedetector.sensitivity":  {
+                                                                                                  "Type":  "Double",
+                                                                                                  "Description":  "zspikedetector.sensitivity",
+                                                                                                  "Links":  [
+                                                                                                                {
+                                                                                                                    "NodeId":  "node5",
+                                                                                                                    "ParameterKey":  "Zscore Threshold"
+                                                                                                                }
+                                                                                                            ]
+                                                                                              },
+                                                               "detectors.historywindow":  {
+                                                                                               "Type":  "Int",
+                                                                                               "Description":  "detectors.historywindow",
+                                                                                               "Links":  [
+                                                                                                             {
+                                                                                                                 "NodeId":  "node6",
+                                                                                                                 "ParameterKey":  "Martingale history"
+                                                                                                             },
+                                                                                                             {
+                                                                                                                 "NodeId":  "node6",
+                                                                                                                 "ParameterKey":  "Strangeness history"
+                                                                                                             },
+                                                                                                             {
+                                                                                                                 "NodeId":  "node7",
+                                                                                                                 "ParameterKey":  "Martingale history"
+                                                                                                             },
+                                                                                                             {
+                                                                                                                 "NodeId":  "node7",
+                                                                                                                 "ParameterKey":  "Strangeness history"
+                                                                                                             }
+                                                                                                         ]
+                                                                                           },
+                                                               "bileveldetector.sensitivity":  {
+                                                                                                   "Type":  "Double",
+                                                                                                   "Description":  "bileveldetector.sensitivity",
+                                                                                                   "Links":  [
+                                                                                                                 {
+                                                                                                                     "NodeId":  "node6",
+                                                                                                                     "ParameterKey":  "Alert threshold"
+                                                                                                                 }
+                                                                                                             ]
+                                                                                               },
+                                                               "trenddetector.sensitivity":  {
+                                                                                                 "Type":  "Double",
+                                                                                                 "Description":  "trenddetector.sensitivity",
+                                                                                                 "Links":  [
+                                                                                                               {
+                                                                                                                   "NodeId":  "node7",
+                                                                                                                   "ParameterKey":  "Alert threshold"
+                                                                                                               }
+                                                                                                           ]
+                                                                                             },
+                                                               "detectors.spikesdips":  {
+                                                                                            "Type":  "Enumerated",
+                                                                                            "Description":  "detectors.spikesdips",
+                                                                                            "Links":  [
+                                                                                                          {
+                                                                                                              "NodeId":  "node5",
+                                                                                                              "ParameterKey":  "Detect Spike or Dip"
+                                                                                                          }
+                                                                                                      ]
+                                                                                        }
+                                                           }
+                                   },
+                       "ExampleRequest":  {
+                                              "Inputs":  {
+                                                             "input1":  [
+                                                                            [
+                                                                                "\/Date(1403056800000)\/",
+                                                                                4600.0
+                                                                            ],
+                                                                            [
+                                                                                "\/Date(1403060400000)\/",
+                                                                                8265.0
+                                                                            ],
+                                                                            [
+                                                                                "\/Date(1403064000000)\/",
+                                                                                8265.0
+                                                                            ],
+                                                                            [
+                                                                                "\/Date(1403067600000)\/",
+                                                                                8265.0
+                                                                            ],
+                                                                            [
+                                                                                "\/Date(1403071200000)\/",
+                                                                                8265.0
+                                                                            ]
+                                                                        ]
+                                                         },
+                                              "GlobalParameters":  {
+                                                                       "postprocess.tailRows":  0,
+                                                                       "tspikedetector.sensitivity":  5.0,
+                                                                       "zspikedetector.sensitivity":  5.0,
+                                                                       "detectors.spikesdips":  "Both",
+                                                                       "detectors.historywindow":  500,
+                                                                       "bileveldetector.sensitivity":  3.25,
+                                                                       "trenddetector.sensitivity":  3.25
+                                                                   }
+                                          }
+                   }
+        },
+        {
+            "apiVersion": "[variables('mlWsApiVersion')]",
+            "name": "[variables('mlSeasonalityWebServiceName')]",
+            "type": "Microsoft.MachineLearning/webservices",
+            "location": "[parameters('siteLocation')]",
+            "dependsOn": [
+                "[concat('Microsoft.MachineLearning/CommitmentPlans/', variables('planName'))]",
+                "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountNameToLower'))]"
+            ],
+            "properties": {
+                "title": "[variables('mlSeasonalityWebServiceTitle')]",
+                "description": "[variables('seasonalityWebserviceDescription')]",
+                "commitmentPlan": {
+                    "id": "[resourceId('Microsoft.MachineLearning/CommitmentPlans', variables('planName'))]"
+                },
+                "StorageAccount": {
+                    "name": "[variables('storageAccountNameToLower')]",
+                    "key": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountNameToLower')), '2015-06-15').key1]"
+                },
+                "MachineLearningWorkspace": {
+                    "Id": "3a4a8c0191ee462fa185189f3ecd1799"
+                },
+                "Assets":  {
+                                      "asset1":  {
+                                                     "Name":  "Tail Join",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_74d0a3ae250842358a1a235529e74ccd.zip?sv=2015-02-21\u0026sr=b\u0026sig=TS9%2FunGJuT8ISY0hbSlYzRLgBPIMVV4YiqYsDilrBIY%3D\u0026se=2016-12-30T21%3A24%3A34Z\u0026sp=r",
+                                                                          "Credentials":  ""
+                                                                      },
+                                                     "InputPorts":  {
+                                                                        "data_in1":  {
+                                                                                         "Type":  "Dataset"
+                                                                                     },
+                                                                        "data_in2":  {
+                                                                                         "Type":  "Dataset"
+                                                                                     },
+                                                                        "data_in3":  {
+                                                                                         "Type":  "Dataset"
+                                                                                     },
+                                                                        "data_in4":  {
+                                                                                         "Type":  "Dataset"
+                                                                                     },
+                                                                        "data_in5":  {
+                                                                                         "Type":  "Dataset"
+                                                                                     }
+                                                                    },
+                                                     "OutputPorts":  {
+                                                                         "data_out":  {
+                                                                                          "Type":  "Dataset"
+                                                                                      }
+                                                                     },
+                                                     "Id":  "3a4a8c0191ee462fa185189f3ecd1799.80d70f92a27f424b88b3e62df9acfbfb.v1-default-140",
+                                                     "Parameters":  [
+                                                                        {
+                                                                            "Name":  "col",
+                                                                            "ParameterType":  "ColumnPicker"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "tailRows",
+                                                                            "ParameterType":  "Int"
+                                                                        }
+                                                                    ],
+                                                     "Metadata":  {
+                                                                      "UseDrawBridge":  null,
+                                                                      "runTimeVersionId":  "6.0",
+                                                                      "InterfaceString":  "/dll \"e331813e47604557aae324c8939c4985, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.Custom._80d70f92a27f424b88b3e62df9acfbfb.Dll.CustomModule;Run\" /Output0 {out:Dataset:data_out} /data_in1 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in1} /data_in2 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in2} [ /data_in3 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in3} ] [ /data_in4 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in4} ] [ /data_in5 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in5} ] /col \"(col:columnpicker,data_in1,False,All,None)\" /tailRows \"(tailRows:int,0,10000:default,0)\" ",
+                                                                      "Description":  "Join AD datasets by a column, and return all or user specified number of rows",
+                                                                      "hostVersionId":  "3.1.0",
+                                                                      "host":  "R",
+                                                                      "FamilyId":  "80d70f92a27f424b88b3e62df9acfbfb"
+                                                                  },
+                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_74d0a3ae250842358a1a235529e74ccd.zip?sv=2015-02-21\u0026sr=b\u0026sig=TS9%2FunGJuT8ISY0hbSlYzRLgBPIMVV4YiqYsDilrBIY%3D\u0026se=2016-12-30T21%3A24%3A34Z\u0026sp=r"
+                                                 },
+                                      "asset2":  {
+                                                     "Name":  "Timeseries Preprocessor",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_8a8ac3b9f8c746bcae8213177b487d2a.zip?sv=2015-02-21\u0026sr=b\u0026sig=LcaS0mlK%2Bz77e8MqfBLeWR58tNn8ldHFCi8tBYccd5E%3D\u0026se=2016-12-30T21%3A24%3A34Z\u0026sp=r",
+                                                                          "Credentials":  ""
+                                                                      },
+                                                     "InputPorts":  {
+                                                                        "data_in":  {
+                                                                                        "Type":  "Dataset"
+                                                                                    }
+                                                                    },
+                                                     "OutputPorts":  {
+                                                                         "data_out":  {
+                                                                                          "Type":  "Dataset"
+                                                                                      }
+                                                                     },
+                                                     "Id":  "3a4a8c0191ee462fa185189f3ecd1799.eb2d2117406d4557801d9195bcd19bdc.v1-default-141",
+                                                     "Parameters":  [
+                                                                        {
+                                                                            "Name":  "format",
+                                                                            "ParameterType":  "Enumerated",
+                                                                            "ModeValuesInfo":  {
+                                                                                                   "ds":  {
+                                                                                                              "InterfaceString":  "",
+                                                                                                              "Parameters":  [
+
+                                                                                                                             ]
+                                                                                                          },
+                                                                                                   "json":  {
+                                                                                                                "InterfaceString":  "",
+                                                                                                                "Parameters":  [
+
+                                                                                                                               ]
+                                                                                                            }
+                                                                                               }
+                                                                        },
+                                                                        {
+                                                                            "Name":  "aggrInterval",
+                                                                            "ParameterType":  "Int"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "aggrFunc",
+                                                                            "ParameterType":  "Enumerated",
+                                                                            "ModeValuesInfo":  {
+                                                                                                   "mean":  {
+                                                                                                                "InterfaceString":  "",
+                                                                                                                "Parameters":  [
+
+                                                                                                                               ]
+                                                                                                            },
+                                                                                                   "sum":  {
+                                                                                                               "InterfaceString":  "",
+                                                                                                               "Parameters":  [
+
+                                                                                                                              ]
+                                                                                                           },
+                                                                                                   "length":  {
+                                                                                                                  "InterfaceString":  "",
+                                                                                                                  "Parameters":  [
+
+                                                                                                                                 ]
+                                                                                                              }
+                                                                                               }
+                                                                        },
+                                                                        {
+                                                                            "Name":  "missingValues",
+                                                                            "ParameterType":  "Enumerated",
+                                                                            "ModeValuesInfo":  {
+                                                                                                   "zero":  {
+                                                                                                                "InterfaceString":  "",
+                                                                                                                "Parameters":  [
+
+                                                                                                                               ]
+                                                                                                            },
+                                                                                                   "lkv":  {
+                                                                                                               "InterfaceString":  "",
+                                                                                                               "Parameters":  [
+
+                                                                                                                              ]
+                                                                                                           },
+                                                                                                   "mean":  {
+                                                                                                                "InterfaceString":  "",
+                                                                                                                "Parameters":  [
+
+                                                                                                                               ]
+                                                                                                            }
+                                                                                               }
+                                                                        }
+                                                                    ],
+                                                     "Metadata":  {
+                                                                      "UseDrawBridge":  null,
+                                                                      "runTimeVersionId":  "6.0",
+                                                                      "InterfaceString":  "/dll \"9a0810f40a3d44f4930942de335de5e0, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.Custom._eb2d2117406d4557801d9195bcd19bdc.Dll.CustomModule;Run\" /Output0 {out:Dataset:data_out} /data_in {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in} /format \"(format:enum,ds,json:default,ds)\" /aggrInterval \"(aggrInterval:int,0,2147483647:default,0)\" /aggrFunc \"(aggrFunc:enum,mean,sum,length:default,mean)\" /missingValues \"(missingValues:enum,zero,lkv,mean:default,lkv)\" ",
+                                                                      "Description":  "Aggregates the input time series and fills the missing values",
+                                                                      "hostVersionId":  "3.1.0",
+                                                                      "host":  "R",
+                                                                      "FamilyId":  "eb2d2117406d4557801d9195bcd19bdc"
+                                                                  },
+                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_8a8ac3b9f8c746bcae8213177b487d2a.zip?sv=2015-02-21\u0026sr=b\u0026sig=LcaS0mlK%2Bz77e8MqfBLeWR58tNn8ldHFCi8tBYccd5E%3D\u0026se=2016-12-30T21%3A24%3A34Z\u0026sp=r"
+                                                 },
+                                      "asset3":  {
+                                                     "Name":  "Edit Metadata",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "aml://module/506153734175476c4f62416c57734963.370b6676c11c486fbf7335349f842a66.v1-default-1729",
+                                                                          "Credentials":  ""
+                                                                      }
+                                                 },
+                                      "asset4":  {
+                                                     "Name":  "fabric1double.csv",
+                                                     "Type":  "Resource",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "https://corpwsstorage.blob.core.windows.net/uploadedresources/e418dedd7bee4c08bda9507a79115fbb.csv?sv=2015-02-21\u0026sr=b\u0026sig=KclBnmxbBDNBkNO8zHqzX2AJgP37I8jrrZltsSMh4As%3D\u0026se=2016-12-30T21%3A24%3A34Z\u0026sp=r",
+                                                                          "Credentials":  ""
+                                                                      },
+                                                     "OutputPorts":  {
+                                                                         "Results dataset":  {
+                                                                                                 "Type":  "Dataset"
+                                                                                             }
+                                                                     }
+                                                 },
+                                      "asset5":  {
+                                                     "Name":  "Select Columns in Dataset",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "aml://module/506153734175476c4f62416c57734963.1ec722fab6234e26a44ea50c6d726223.v1-default-1730",
+                                                                          "Credentials":  ""
+                                                                      }
+                                                 },
+                                      "asset6":  {
+                                                     "Name":  "SpikeDetector",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_c0983bc7e2514bc58065dd0ff2261dbf.zip?sv=2015-02-21\u0026sr=b\u0026sig=NpqoXZFhIQuYt1rN8R4sMzw5atumG%2FXpVUwT%2FSHdOgA%3D\u0026se=2016-12-30T21%3A24%3A34Z\u0026sp=r",
+                                                                          "Credentials":  ""
+                                                                      },
+                                                     "InputPorts":  {
+                                                                        "data":  {
+                                                                                     "Type":  "Dataset"
+                                                                                 }
+                                                                    },
+                                                     "OutputPorts":  {
+                                                                         "spikesORdips":  {
+                                                                                              "Type":  "Dataset"
+                                                                                          }
+                                                                     },
+                                                     "Id":  "3a4a8c0191ee462fa185189f3ecd1799.3370ffac732040ed9c366f3094d85fa1.v1-default-162",
+                                                     "Parameters":  [
+                                                                        {
+                                                                            "Name":  "Data column",
+                                                                            "ParameterType":  "ColumnPicker"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Tukey Threshold",
+                                                                            "ParameterType":  "Double"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Zscore Threshold",
+                                                                            "ParameterType":  "Double"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Detect Spike or Dip",
+                                                                            "ParameterType":  "Enumerated",
+                                                                            "ModeValuesInfo":  {
+                                                                                                   "Spikes":  {
+                                                                                                                  "InterfaceString":  "",
+                                                                                                                  "Parameters":  [
+
+                                                                                                                                 ]
+                                                                                                              },
+                                                                                                   "Dips":  {
+                                                                                                                "InterfaceString":  "",
+                                                                                                                "Parameters":  [
+
+                                                                                                                               ]
+                                                                                                            },
+                                                                                                   "Both":  {
+                                                                                                                "InterfaceString":  "",
+                                                                                                                "Parameters":  [
+
+                                                                                                                               ]
+                                                                                                            }
+                                                                                               }
+                                                                        }
+                                                                    ],
+                                                     "Metadata":  {
+                                                                      "UseDrawBridge":  null,
+                                                                      "runTimeVersionId":  "6.0",
+                                                                      "InterfaceString":  "/dll \"SpikeDetector, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;AnomalyDetection.AnomalyDetectionModules;SpikeDetector\" /Output0 {out:Dataset:spikesORdips} /dataTable {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data} /dataCol \"(Data column:columnpicker,data,True,All,)\" /tukeyThresh \"(Tukey Threshold:double,1,20:default,3)\" /zscoreThresh \"(Zscore Threshold:double,1,20:default,3)\" /spikeOrDip \"(Detect Spike or Dip:enum,Spikes,Dips,Both:default,Both)\" ",
+                                                                      "Description":  "Detect the spikes or dips in incoming dataset",
+                                                                      "hostVersionId":  "4.5.0",
+                                                                      "host":  "DotNet",
+                                                                      "FamilyId":  "3370ffac732040ed9c366f3094d85fa1"
+                                                                  },
+                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_c0983bc7e2514bc58065dd0ff2261dbf.zip?sv=2015-02-21\u0026sr=b\u0026sig=NpqoXZFhIQuYt1rN8R4sMzw5atumG%2FXpVUwT%2FSHdOgA%3D\u0026se=2016-12-30T21%3A24%3A34Z\u0026sp=r"
+                                                 },
+                                      "asset7":  {
+                                                     "Name":  "Change Detection",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_d15782bb423a402db6fb9e173fc58be5.zip?sv=2015-02-21\u0026sr=b\u0026sig=Fwc5UxyIG3kQ6iz7%2B4NPH4%2BuLH%2Bzhrd3WQTihmk5DDA%3D\u0026se=2016-12-30T21%3A24%3A34Z\u0026sp=r",
+                                                                          "Credentials":  ""
+                                                                      },
+                                                     "InputPorts":  {
+                                                                        "input":  {
+                                                                                      "Type":  "Dataset"
+                                                                                  }
+                                                                    },
+                                                     "OutputPorts":  {
+                                                                         "table":  {
+                                                                                       "Type":  "Dataset"
+                                                                                   }
+                                                                     },
+                                                     "Id":  "3a4a8c0191ee462fa185189f3ecd1799.ce9d2d92ebfd437193aa1a6238f20a4d.v1-default-171",
+                                                     "Parameters":  [
+                                                                        {
+                                                                            "Name":  "Data column",
+                                                                            "ParameterType":  "ColumnPicker"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Time column",
+                                                                            "ParameterType":  "ColumnPicker"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Martingale",
+                                                                            "ParameterType":  "Mode",
+                                                                            "ModeValuesInfo":  {
+                                                                                                   "Power":  {
+                                                                                                                 "InterfaceString":  "/dll \"ChangeDetection, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.ChangeDetection;EntryPoint\" /Output0 {out:Dataset:table} /inputData {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:input} /dataColumn \"(Data column:columnpicker,input,True,All,)\" /timeColumn \"(Time column:columnpicker,input,True,All,)\" /martingale \"(Martingale:enum,Power,PowerAvg:default,PowerAvg)\" /strangeness \"(Strangeness:enum,DistanceBased,Percentile,RangePercentile,Median,SlowPosTrend,SlowNegTrend:default,RangePercentile)\" /martingaleHistory \"(Martingale history:int,10,1000:default,500)\" /strangenessHistory \"(Strangeness history:int,10,1000:default,500)\" /thresh \"(Alert threshold:double,0,100:default,3.25)\" /epsilon \"(Epsilon:double,0,1:default,0.9)\" ",
+                                                                                                                 "Parameters":  [
+                                                                                                                                    {
+                                                                                                                                        "Name":  "Epsilon",
+                                                                                                                                        "ParameterType":  "Double"
+                                                                                                                                    }
+                                                                                                                                ]
+                                                                                                             },
+                                                                                                   "PowerAvg":  {
+                                                                                                                    "InterfaceString":  "/dll \"ChangeDetection, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.ChangeDetection;EntryPoint\" /Output0 {out:Dataset:table} /inputData {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:input} /dataColumn \"(Data column:columnpicker,input,True,All,)\" /timeColumn \"(Time column:columnpicker,input,True,All,)\" /martingale \"(Martingale:enum,Power,PowerAvg:default,PowerAvg)\" /strangeness \"(Strangeness:enum,DistanceBased,Percentile,RangePercentile,Median,SlowPosTrend,SlowNegTrend:default,RangePercentile)\" /martingaleHistory \"(Martingale history:int,10,1000:default,500)\" /strangenessHistory \"(Strangeness history:int,10,1000:default,500)\" /thresh \"(Alert threshold:double,0,100:default,3.25)\" ",
+                                                                                                                    "Parameters":  [
+
+                                                                                                                                   ]
+                                                                                                                }
+                                                                                               }
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Strangeness",
+                                                                            "ParameterType":  "Enumerated",
+                                                                            "ModeValuesInfo":  {
+                                                                                                   "DistanceBased":  {
+                                                                                                                         "InterfaceString":  "",
+                                                                                                                         "Parameters":  [
+
+                                                                                                                                        ]
+                                                                                                                     },
+                                                                                                   "Percentile":  {
+                                                                                                                      "InterfaceString":  "",
+                                                                                                                      "Parameters":  [
+
+                                                                                                                                     ]
+                                                                                                                  },
+                                                                                                   "RangePercentile":  {
+                                                                                                                           "InterfaceString":  "",
+                                                                                                                           "Parameters":  [
+
+                                                                                                                                          ]
+                                                                                                                       },
+                                                                                                   "Median":  {
+                                                                                                                  "InterfaceString":  "",
+                                                                                                                  "Parameters":  [
+
+                                                                                                                                 ]
+                                                                                                              },
+                                                                                                   "SlowPosTrend":  {
+                                                                                                                        "InterfaceString":  "",
+                                                                                                                        "Parameters":  [
+
+                                                                                                                                       ]
+                                                                                                                    },
+                                                                                                   "SlowNegTrend":  {
+                                                                                                                        "InterfaceString":  "",
+                                                                                                                        "Parameters":  [
+
+                                                                                                                                       ]
+                                                                                                                    }
+                                                                                               }
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Martingale history",
+                                                                            "ParameterType":  "Int"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Strangeness history",
+                                                                            "ParameterType":  "Int"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "Alert threshold",
+                                                                            "ParameterType":  "Double"
+                                                                        }
+                                                                    ],
+                                                     "Metadata":  {
+                                                                      "UseDrawBridge":  null,
+                                                                      "runTimeVersionId":  "6.0",
+                                                                      "InterfaceString":  "/dll \"ChangeDetection, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.ChangeDetection;EntryPoint\" /Output0 {out:Dataset:table} /inputData {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:input} /dataColumn \"(Data column:columnpicker,input,True,All,)\" /timeColumn \"(Time column:columnpicker,input,True,All,)\" /martingale \"(Martingale:enum,Power,PowerAvg:default,PowerAvg)\" /strangeness \"(Strangeness:enum,DistanceBased,Percentile,RangePercentile,Median,SlowPosTrend,SlowNegTrend:default,RangePercentile)\" /martingaleHistory \"(Martingale history:int,10,1000:default,500)\" /strangenessHistory \"(Strangeness history:int,10,1000:default,500)\" /epsilon \"(Epsilon:double,0,1:default,0.9)\" /thresh \"(Alert threshold:double,0,100:default,3.25)\" ",
+                                                                      "Description":  "Detects anomalies in the input time series. Returns anomaly score and alert indicator",
+                                                                      "hostVersionId":  "4.5.0",
+                                                                      "host":  "DotNet",
+                                                                      "FamilyId":  "ce9d2d92ebfd437193aa1a6238f20a4d"
+                                                                  },
+                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_d15782bb423a402db6fb9e173fc58be5.zip?sv=2015-02-21\u0026sr=b\u0026sig=Fwc5UxyIG3kQ6iz7%2B4NPH4%2BuLH%2Bzhrd3WQTihmk5DDA%3D\u0026se=2016-12-30T21%3A24%3A34Z\u0026sp=r"
+                                                 },
+                                      "asset8":  {
+                                                     "Name":  "Seasonality Analysis",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_60127909ab2948b3be0504aa1d0dffeb.zip?sv=2015-02-21\u0026sr=b\u0026sig=mKCV9fOgVH1jGD0cwQ0eKc7rr4%2FWGdvROdi5CD27sGY%3D\u0026se=2016-12-30T21%3A24%3A34Z\u0026sp=r",
+                                                                          "Credentials":  ""
+                                                                      },
+                                                     "InputPorts":  {
+                                                                        "TimeSeries":  {
+                                                                                           "Type":  "Dataset"
+                                                                                       }
+                                                                    },
+                                                     "OutputPorts":  {
+                                                                         "Period":  {
+                                                                                        "Type":  "Dataset"
+                                                                                    },
+                                                                         "ProcessedTimeSeries":  {
+                                                                                                     "Type":  "Dataset"
+                                                                                                 },
+                                                                         "DecomposedTimeSeries":  {
+                                                                                                      "Type":  "Dataset"
+                                                                                                  }
+                                                                     },
+                                                     "Id":  "3a4a8c0191ee462fa185189f3ecd1799.86374461603743ca9e097a657200199c.v1-default-174",
+                                                     "Parameters":  [
+                                                                        {
+                                                                            "Name":  "data",
+                                                                            "ParameterType":  "ColumnPicker"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "time",
+                                                                            "ParameterType":  "ColumnPicker"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "RunSeasonality",
+                                                                            "ParameterType":  "Boolean"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "NumSeasonalityDet",
+                                                                            "ParameterType":  "Int"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "DeSeasonTrend",
+                                                                            "ParameterType":  "Enumerated",
+                                                                            "ModeValuesInfo":  {
+                                                                                                   "none":  {
+                                                                                                                "InterfaceString":  "",
+                                                                                                                "Parameters":  [
+
+                                                                                                                               ]
+                                                                                                            },
+                                                                                                   "deseason":  {
+                                                                                                                    "InterfaceString":  "",
+                                                                                                                    "Parameters":  [
+
+                                                                                                                                   ]
+                                                                                                                },
+                                                                                                   "deseasontrend":  {
+                                                                                                                         "InterfaceString":  "",
+                                                                                                                         "Parameters":  [
+
+                                                                                                                                        ]
+                                                                                                                     }
+                                                                                               }
+                                                                        },
+                                                                        {
+                                                                            "Name":  "LinearDetectThreshold",
+                                                                            "ParameterType":  "Double"
+                                                                        },
+                                                                        {
+                                                                            "Name":  "ExpoDetectThreshold",
+                                                                            "ParameterType":  "Double"
+                                                                        }
+                                                                    ],
+                                                     "Metadata":  {
+                                                                      "UseDrawBridge":  null,
+                                                                      "runTimeVersionId":  "6.0",
+                                                                      "InterfaceString":  "/dll \"48f55fc9a5e64a8d91718c2a7f0df541, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.Custom._86374461603743ca9e097a657200199c.Dll.CustomModule;Run\" /Output0 {out:Dataset:Period} /Output1 {out:Dataset:ProcessedTimeSeries} /Output2 {out:Dataset:DecomposedTimeSeries} /TimeSeries {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:TimeSeries} /data \"(data:columnpicker,TimeSeries,False,Numeric,None)\" /time \"(time:columnpicker,TimeSeries,False,All,None)\" /RunSeasonality \"(RunSeasonality:bool:default,True)\" /NumSeasonalityDet \"(NumSeasonalityDet:int,1,2:default,1)\" /DeSeasonTrend \"(DeSeasonTrend:enum,none,deseason,deseasontrend:default,deseason)\" /LinearDetectThreshold \"(LinearDetectThreshold:double,2.99,5:default,3)\" /ExpoDetectThreshold \"(ExpoDetectThreshold:double,4,10:default,5)\" ",
+                                                                      "Description":  "Analyze input time series and output data period (if data period == 1, means no significant seasonality detected). Also output seasonally adjusted time series if SeasonalAdjust is set to TRUE and significant seasonality has been detected",
+                                                                      "hostVersionId":  "3.1.0",
+                                                                      "host":  "R",
+                                                                      "FamilyId":  "86374461603743ca9e097a657200199c"
+                                                                  },
+                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_60127909ab2948b3be0504aa1d0dffeb.zip?sv=2015-02-21\u0026sr=b\u0026sig=mKCV9fOgVH1jGD0cwQ0eKc7rr4%2FWGdvROdi5CD27sGY%3D\u0026se=2016-12-30T21%3A24%3A34Z\u0026sp=r"
+                                                 }
+                                  },
+                       "Parameters":  {
+                                          "detectors.historywindow":  "500",
+                                          "preprocess.aggregationInterval":  "0",
+                                          "preprocess.aggregationFunc":  "mean",
+                                          "preprocess.replaceMissing":  "lkv",
+                                          "seasonality.enable":  "False",
+                                          "seasonality.numSeasonality":  "1",
+                                          "seasonality.transform":  "none",
+                                          "postprocess.tailRows":  "0",
+                                          "upleveldetector.sensitivity":  "3.25",
+                                          "bileveldetector.sensitivity":  "3.25",
+                                          "trenddetector.sensitivity":  "3.25",
+                                          "zspikedetector.sensitivity":  "3",
+                                          "tspikedetector.sensitivity":  "3",
+                                          "detectors.spikesdips":  "Both"
+                                      },
+                       "Input":  {
+                                     "Title":  "",
+                                     "Description":  "",
+                                     "Type":  "object",
+                                     "Properties":  {
+                                                        "input1":  {
+                                                                       "Title":  "",
+                                                                       "Description":  "",
+                                                                       "Type":  "object",
+                                                                       "Properties":  {
+                                                                                          "Time":  {
+                                                                                                       "Type":  "String",
+                                                                                                       "Format":  "Date-time",
+                                                                                                       "x-ms-isnullable":  false
+                                                                                                   },
+                                                                                          "Data":  {
+                                                                                                       "Type":  "Number",
+                                                                                                       "Format":  "Double",
+                                                                                                       "x-ms-isnullable":  false
+                                                                                                   }
+                                                                                      }
+                                                                   }
+                                                    }
+                                 },
+                       "Output":  {
+                                      "Title":  "",
+                                      "Description":  "",
+                                      "Type":  "object",
+                                      "Properties":  {
+                                                         "output1":  {
+                                                                         "Title":  "",
+                                                                         "Description":  "",
+                                                                         "Type":  "object",
+                                                                         "Properties":  {
+                                                                                            "Time":  {
+                                                                                                         "Type":  "String",
+                                                                                                         "Format":  "Date-time",
+                                                                                                         "x-ms-isnullable":  false
+                                                                                                     },
+                                                                                            "OriginalData":  {
+                                                                                                                 "Type":  "Number",
+                                                                                                                 "Format":  "Double",
+                                                                                                                 "x-ms-isnullable":  false
+                                                                                                             },
+                                                                                            "ProcessedData":  {
+                                                                                                                  "Type":  "Number",
+                                                                                                                  "Format":  "Double",
+                                                                                                                  "x-ms-isnullable":  false
+                                                                                                              },
+                                                                                            "TSpike":  {
+                                                                                                           "Type":  "Number",
+                                                                                                           "Format":  "Double",
+                                                                                                           "x-ms-isnullable":  false
+                                                                                                       },
+                                                                                            "ZSpike":  {
+                                                                                                           "Type":  "Number",
+                                                                                                           "Format":  "Double",
+                                                                                                           "x-ms-isnullable":  false
+                                                                                                       },
+                                                                                            "PScore":  {
+                                                                                                           "Type":  "Number",
+                                                                                                           "Format":  "Double",
+                                                                                                           "x-ms-isnullable":  false
+                                                                                                       },
+                                                                                            "PAlert":  {
+                                                                                                           "Type":  "Integer",
+                                                                                                           "Format":  "Int32",
+                                                                                                           "x-ms-isnullable":  false
+                                                                                                       },
+                                                                                            "RPScore":  {
+                                                                                                            "Type":  "Number",
+                                                                                                            "Format":  "Double",
+                                                                                                            "x-ms-isnullable":  false
+                                                                                                        },
+                                                                                            "RPAlert":  {
+                                                                                                            "Type":  "Integer",
+                                                                                                            "Format":  "Int32",
+                                                                                                            "x-ms-isnullable":  false
+                                                                                                        },
+                                                                                            "TScore":  {
+                                                                                                           "Type":  "Number",
+                                                                                                           "Format":  "Double",
+                                                                                                           "x-ms-isnullable":  false
+                                                                                                       },
+                                                                                            "TAlert":  {
+                                                                                                           "Type":  "Integer",
+                                                                                                           "Format":  "Int32",
+                                                                                                           "x-ms-isnullable":  false
+                                                                                                       }
+                                                                                        }
+                                                                     }
+                                                     }
+                                  },
+                       "packageType":  "Graph",
+                       "Package":  {
+                                       "Nodes":  {
+                                                     "node1":  {
+                                                                   "AssetId":  "asset1",
+                                                                   "Parameters":  {
+                                                                                      "col":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+                                                                                      "tailRows":  "0"
+                                                                                  }
+                                                               },
+                                                     "node2":  {
+                                                                   "AssetId":  "asset2",
+                                                                   "Parameters":  {
+                                                                                      "format":  "ds",
+                                                                                      "aggrInterval":  "0",
+                                                                                      "aggrFunc":  "mean",
+                                                                                      "missingValues":  "lkv"
+                                                                                  }
+                                                               },
+                                                     "node3":  {
+                                                                   "AssetId":  "asset3",
+                                                                   "Parameters":  {
+                                                                                      "Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnIndexes%22%2C%22columns%22%3A%5B%221%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Data Type":  "DateTime",
+                                                                                      "Categorical":  "Unchanged",
+                                                                                      "Fields":  "Unchanged",
+                                                                                      "New Column Name":  "Time"
+                                                                                  }
+                                                               },
+                                                     "node4":  {
+                                                                   "AssetId":  "asset3",
+                                                                   "Parameters":  {
+                                                                                      "Column":  "%7B%22isFilter%22%3Afalse%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%2C%22Data.x%22%2C%22Martingale.values.x%22%2C%22Alert.indicator.x%22%2C%22Martingale.values.y%22%2C%22Alert.indicator.y%22%2C%22Martingale.values%22%2C%22Alert.indicator%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+                                                                                      "Data Type":  "Unchanged",
+                                                                                      "Categorical":  "Unchanged",
+                                                                                      "Fields":  "Unchanged",
+                                                                                      "New Column Name":  "OriginalData,ProcessedData,PScore,PAlert,RPScore,RPAlert,TScore,TAlert"
+                                                                                  }
+                                                               },
+                                                     "node5":  {
+                                                                   "AssetId":  "asset5",
+                                                                   "Parameters":  {
+                                                                                      "Select Columns":  "%7B%22isFilter%22%3Afalse%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%2C%22Data%22%2C%22Data.x%22%2C%22TSpike%22%2C%22ZSpike%22%2C%22Martingale.values.x%22%2C%22Alert.indicator.x%22%2C%22Martingale.values.y%22%2C%22Alert.indicator.y%22%2C%22Martingale.values%22%2C%22Alert.indicator%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D"
+                                                                                  }
+                                                               },
+                                                     "node6":  {
+                                                                   "AssetId":  "asset6",
+                                                                   "Parameters":  {
+                                                                                      "Data column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Tukey Threshold":  "3",
+                                                                                      "Zscore Threshold":  "3",
+                                                                                      "Detect Spike or Dip":  "Both"
+                                                                                  }
+                                                               },
+                                                     "node7":  {
+                                                                   "AssetId":  "asset7",
+                                                                   "Parameters":  {
+                                                                                      "Data column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Time column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Martingale":  "PowerAvg",
+                                                                                      "Strangeness":  "Percentile",
+                                                                                      "Martingale history":  "500",
+                                                                                      "Strangeness history":  "500",
+                                                                                      "Alert threshold":  "3.25"
+                                                                                  }
+                                                               },
+                                                     "node8":  {
+                                                                   "AssetId":  "asset7",
+                                                                   "Parameters":  {
+                                                                                      "Data column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Time column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Martingale":  "PowerAvg",
+                                                                                      "Strangeness":  "RangePercentile",
+                                                                                      "Martingale history":  "500",
+                                                                                      "Strangeness history":  "500",
+                                                                                      "Alert threshold":  "3.25"
+                                                                                  }
+                                                               },
+                                                     "node9":  {
+                                                                   "AssetId":  "asset7",
+                                                                   "Parameters":  {
+                                                                                      "Data column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Time column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Martingale":  "PowerAvg",
+                                                                                      "Strangeness":  "SlowPosTrend",
+                                                                                      "Martingale history":  "500",
+                                                                                      "Strangeness history":  "500",
+                                                                                      "Alert threshold":  "3.25"
+                                                                                  }
+                                                               },
+                                                     "node10":  {
+                                                                    "AssetId":  "asset8",
+                                                                    "Parameters":  {
+                                                                                       "data":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnIndexes%22%2C%22columns%22%3A%5B%222%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+                                                                                       "time":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnIndexes%22%2C%22columns%22%3A%5B%221%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+                                                                                       "RunSeasonality":  "True",
+                                                                                       "NumSeasonalityDet":  "1",
+                                                                                       "DeSeasonTrend":  "deseason",
+                                                                                       "LinearDetectThreshold":  "3",
+                                                                                       "ExpoDetectThreshold":  "5"
+                                                                                   }
+                                                                },
+                                                     "node11":  {
+                                                                    "AssetId":  "asset4"
+                                                                },
+                                                     "node12":  {
+                                                                    "InputId":  "input1"
+                                                                },
+                                                     "node13":  {
+                                                                    "OutputId":  "output1"
+                                                                }
+                                                 },
+                                       "Edges":  [
+                                                     {
+                                                         "SourceNodeId":  "node1",
+                                                         "SourcePortId":  "data_out",
+                                                         "TargetNodeId":  "node5",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node2",
+                                                         "SourcePortId":  "data_out",
+                                                         "TargetNodeId":  "node1",
+                                                         "TargetPortId":  "data_in5"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node2",
+                                                         "SourcePortId":  "data_out",
+                                                         "TargetNodeId":  "node10",
+                                                         "TargetPortId":  "TimeSeries"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node3",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node2",
+                                                         "TargetPortId":  "data_in"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node5",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node4",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node6",
+                                                         "SourcePortId":  "spikesORdips",
+                                                         "TargetNodeId":  "node1",
+                                                         "TargetPortId":  "data_in1"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node7",
+                                                         "SourcePortId":  "table",
+                                                         "TargetNodeId":  "node1",
+                                                         "TargetPortId":  "data_in2"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node8",
+                                                         "SourcePortId":  "table",
+                                                         "TargetNodeId":  "node1",
+                                                         "TargetPortId":  "data_in3"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node9",
+                                                         "SourcePortId":  "table",
+                                                         "TargetNodeId":  "node1",
+                                                         "TargetPortId":  "data_in4"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node10",
+                                                         "SourcePortId":  "ProcessedTimeSeries",
+                                                         "TargetNodeId":  "node7",
+                                                         "TargetPortId":  "input"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node10",
+                                                         "SourcePortId":  "ProcessedTimeSeries",
+                                                         "TargetNodeId":  "node8",
+                                                         "TargetPortId":  "input"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node10",
+                                                         "SourcePortId":  "ProcessedTimeSeries",
+                                                         "TargetNodeId":  "node9",
+                                                         "TargetPortId":  "input"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node10",
+                                                         "SourcePortId":  "ProcessedTimeSeries",
+                                                         "TargetNodeId":  "node6",
+                                                         "TargetPortId":  "data"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node11",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node3",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node12",
+                                                         "TargetNodeId":  "node3",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node4",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node13"
+                                                     }
+                                                 ],
+                                       "GraphParameters":  {
+                                                               "detectors.historywindow":  {
+                                                                                               "Type":  "Int",
+                                                                                               "Description":  "detectors.historywindow",
+                                                                                               "Links":  [
+                                                                                                             {
+                                                                                                                 "NodeId":  "node7",
+                                                                                                                 "ParameterKey":  "Martingale history"
+                                                                                                             },
+                                                                                                             {
+                                                                                                                 "NodeId":  "node7",
+                                                                                                                 "ParameterKey":  "Strangeness history"
+                                                                                                             },
+                                                                                                             {
+                                                                                                                 "NodeId":  "node8",
+                                                                                                                 "ParameterKey":  "Martingale history"
+                                                                                                             },
+                                                                                                             {
+                                                                                                                 "NodeId":  "node8",
+                                                                                                                 "ParameterKey":  "Strangeness history"
+                                                                                                             },
+                                                                                                             {
+                                                                                                                 "NodeId":  "node9",
+                                                                                                                 "ParameterKey":  "Martingale history"
+                                                                                                             },
+                                                                                                             {
+                                                                                                                 "NodeId":  "node9",
+                                                                                                                 "ParameterKey":  "Strangeness history"
+                                                                                                             }
+                                                                                                         ]
+                                                                                           },
+                                                               "preprocess.aggregationInterval":  {
+                                                                                                      "Type":  "Int",
+                                                                                                      "Description":  "preprocess.aggregationInterval",
+                                                                                                      "Links":  [
+                                                                                                                    {
+                                                                                                                        "NodeId":  "node2",
+                                                                                                                        "ParameterKey":  "aggrInterval"
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                  },
+                                                               "preprocess.aggregationFunc":  {
+                                                                                                  "Type":  "Enumerated",
+                                                                                                  "Description":  "preprocess.aggregationFunc",
+                                                                                                  "Links":  [
+                                                                                                                {
+                                                                                                                    "NodeId":  "node2",
+                                                                                                                    "ParameterKey":  "aggrFunc"
+                                                                                                                }
+                                                                                                            ]
+                                                                                              },
+                                                               "preprocess.replaceMissing":  {
+                                                                                                 "Type":  "Enumerated",
+                                                                                                 "Description":  "preprocess.replaceMissing",
+                                                                                                 "Links":  [
+                                                                                                               {
+                                                                                                                   "NodeId":  "node2",
+                                                                                                                   "ParameterKey":  "missingValues"
+                                                                                                               }
+                                                                                                           ]
+                                                                                             },
+                                                               "seasonality.enable":  {
+                                                                                          "Type":  "Boolean",
+                                                                                          "Description":  "seasonality.enable",
+                                                                                          "Links":  [
+                                                                                                        {
+                                                                                                            "NodeId":  "node10",
+                                                                                                            "ParameterKey":  "RunSeasonality"
+                                                                                                        }
+                                                                                                    ]
+                                                                                      },
+                                                               "seasonality.numSeasonality":  {
+                                                                                                  "Type":  "Int",
+                                                                                                  "Description":  "seasonality.numSeasonality",
+                                                                                                  "Links":  [
+                                                                                                                {
+                                                                                                                    "NodeId":  "node10",
+                                                                                                                    "ParameterKey":  "NumSeasonalityDet"
+                                                                                                                }
+                                                                                                            ]
+                                                                                              },
+                                                               "seasonality.transform":  {
+                                                                                             "Type":  "Enumerated",
+                                                                                             "Description":  "seasonality.transform",
+                                                                                             "Links":  [
+                                                                                                           {
+                                                                                                               "NodeId":  "node10",
+                                                                                                               "ParameterKey":  "DeSeasonTrend"
+                                                                                                           }
+                                                                                                       ]
+                                                                                         },
+                                                               "postprocess.tailRows":  {
+                                                                                            "Type":  "Int",
+                                                                                            "Description":  "postprocess.tailRows",
+                                                                                            "Links":  [
+                                                                                                          {
+                                                                                                              "NodeId":  "node1",
+                                                                                                              "ParameterKey":  "tailRows"
+                                                                                                          }
+                                                                                                      ]
+                                                                                        },
+                                                               "upleveldetector.sensitivity":  {
+                                                                                                   "Type":  "Double",
+                                                                                                   "Description":  "upleveldetector.sensitivity",
+                                                                                                   "Links":  [
+                                                                                                                 {
+                                                                                                                     "NodeId":  "node7",
+                                                                                                                     "ParameterKey":  "Alert threshold"
+                                                                                                                 }
+                                                                                                             ]
+                                                                                               },
+                                                               "bileveldetector.sensitivity":  {
+                                                                                                   "Type":  "Double",
+                                                                                                   "Description":  "bileveldetector.sensitivity",
+                                                                                                   "Links":  [
+                                                                                                                 {
+                                                                                                                     "NodeId":  "node8",
+                                                                                                                     "ParameterKey":  "Alert threshold"
+                                                                                                                 }
+                                                                                                             ]
+                                                                                               },
+                                                               "trenddetector.sensitivity":  {
+                                                                                                 "Type":  "Double",
+                                                                                                 "Description":  "trenddetector.sensitivity",
+                                                                                                 "Links":  [
+                                                                                                               {
+                                                                                                                   "NodeId":  "node9",
+                                                                                                                   "ParameterKey":  "Alert threshold"
+                                                                                                               }
+                                                                                                           ]
+                                                                                             },
+                                                               "zspikedetector.sensitivity":  {
+                                                                                                  "Type":  "Double",
+                                                                                                  "Description":  "zspikedetector.sensitivity",
+                                                                                                  "Links":  [
+                                                                                                                {
+                                                                                                                    "NodeId":  "node6",
+                                                                                                                    "ParameterKey":  "Zscore Threshold"
+                                                                                                                }
+                                                                                                            ]
+                                                                                              },
+                                                               "tspikedetector.sensitivity":  {
+                                                                                                  "Type":  "Double",
+                                                                                                  "Description":  "tspikedetector.sensitivity",
+                                                                                                  "Links":  [
+                                                                                                                {
+                                                                                                                    "NodeId":  "node6",
+                                                                                                                    "ParameterKey":  "Tukey Threshold"
+                                                                                                                }
+                                                                                                            ]
+                                                                                              },
+                                                               "detectors.spikesdips":  {
+                                                                                            "Type":  "Enumerated",
+                                                                                            "Description":  "detectors.spikesdips",
+                                                                                            "Links":  [
+                                                                                                          {
+                                                                                                              "NodeId":  "node6",
+                                                                                                              "ParameterKey":  "Detect Spike or Dip"
+                                                                                                          }
+                                                                                                      ]
+                                                                                        }
+                                                           }
+                                   },
+                       "ExampleRequest":  {
+                                              "Inputs":  {
+                                                             "input1":  [
+                                                                            [
+                                                                                "\/Date(1444240800000)\/",
+                                                                                1747255816.0
+                                                                            ],
+                                                                            [
+                                                                                "\/Date(1444244400000)\/",
+                                                                                2115939264.0
+                                                                            ],
+                                                                            [
+                                                                                "\/Date(1444248000000)\/",
+                                                                                2884356352.0
+                                                                            ],
+                                                                            [
+                                                                                "\/Date(1444251600000)\/",
+                                                                                1803952631.0
+                                                                            ],
+                                                                            [
+                                                                                "\/Date(1444255200000)\/",
+                                                                                2575213955.0
+                                                                            ]
+                                                                        ]
+                                                         },
+                                              "GlobalParameters":  {
+                                                                       "postprocess.tailRows":  0,
+                                                                       "preprocess.aggregationInterval":  0,
+                                                                       "preprocess.aggregationFunc":  "mean",
+                                                                       "preprocess.replaceMissing":  "lkv",
+                                                                       "tspikedetector.sensitivity":  3.0,
+                                                                       "zspikedetector.sensitivity":  3.0,
+                                                                       "detectors.spikesdips":  "Both",
+                                                                       "detectors.historywindow":  500,
+                                                                       "upleveldetector.sensitivity":  3.25,
+                                                                       "bileveldetector.sensitivity":  3.25,
+                                                                       "trenddetector.sensitivity":  3.25,
+                                                                       "seasonality.enable":  true,
+                                                                       "seasonality.numSeasonality":  1,
+                                                                       "seasonality.transform":  "deseason"
+                                                                   }
+                                          }
+                   }
+        }
+    ]
+}
