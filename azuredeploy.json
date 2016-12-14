@@ -8,9 +8,6 @@
             },
             "type": "string",
             "defaultValue": "{\"tspikedetector.sensitivity\":\"3\",\"zspikedetector.sensitivity\":\"3\",\"trenddetector.sensitivity\":\"3.25\",\"bileveldetector.sensitivity\":\"3.25\"}"
-        },
-        "siteLocation": {
-            "type": "string"
         }
     },
     "variables": {
@@ -37,7 +34,7 @@
         {
             "name": "[variables('storageAccountNameToLower')]",
             "type": "Microsoft.Storage/storageAccounts",
-            "location": "[parameters('siteLocation')]",
+            "location": "[resourceGroup().location]",
             "apiVersion": "[variables('stgVersion')]",
             "dependsOn": [ ],
             "properties": {
@@ -48,7 +45,7 @@
             "apiVersion": "[variables('mlWsApiVersion')]",
             "name": "[variables('planName')]",
             "type": "Microsoft.MachineLearning/CommitmentPlans",
-            "location": "[parameters('siteLocation')]",
+            "location": "[resourceGroup().location]",
             "sku": {
                 "name": "[variables('planSkuName')]",
                 "tier": "[variables('planSkuTier')]",
@@ -62,7 +59,7 @@
             "apiVersion": "[variables('mlWsApiVersion')]",
             "name": "[variables('mlWebServiceName')]",
             "type": "Microsoft.MachineLearning/webservices",
-            "location": "[parameters('siteLocation')]",
+            "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[concat('Microsoft.MachineLearning/CommitmentPlans/', variables('planName'))]",
                 "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountNameToLower'))]"
@@ -700,7 +697,7 @@
             "apiVersion": "[variables('mlWsApiVersion')]",
             "name": "[variables('mlSeasonalityWebServiceName')]",
             "type": "Microsoft.MachineLearning/webservices",
-            "location": "[parameters('siteLocation')]",
+            "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[concat('Microsoft.MachineLearning/CommitmentPlans/', variables('planName'))]",
                 "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountNameToLower'))]"

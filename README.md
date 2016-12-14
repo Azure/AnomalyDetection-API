@@ -1,6 +1,6 @@
 # adapi
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+[![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](http://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FAnomalyDetection-API%2Fmaster%2Fazuredeploy.json)
 
 # Instructions
 1. Click the "Deploy to Azure" button above
