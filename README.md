@@ -5,10 +5,10 @@
 # Deployment Instructions
 1. Click the "Deploy to Azure" button above
 2. You will be required to chose a Resource Group name and a location where the resources will be deployed.
-3. Once the deployment completes, you will be able to find the Resource Group in the [Azure Portal](https://ms.portal.azure.com/#blade/HubsExtension/Resources/resourceType/Microsoft.Resources%2Fsubscriptions%2FresourceGroups)
+3. Once the deployment completes, you will be able to find the Resource Group in the [Azure Portal](https://ms.portal.azure.com/#blade/HubsExtension/Resources/resourceType/Microsoft.Resources%2Fsubscriptions%2FresourceGroups).  The names of the resources will be based on the resource group name provided in step 2.
 4. You can manage the web services from the [Azure ML Web Services page](https://services.azureml.net/webservices/).  From here you can test the endpoints, find the API keys, read documentation, etc.  Detailed instructions are availabe [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice)
 
 # Scaling the API
 This template will deploy a free Dev/Test billing plan.  You may wish to upgrade to larger plan.  Details on the pricing and compute resources of different plans are available [here](https://azure.microsoft.com/en-us/pricing/details/machine-learning/) under "Production Web API pricing".
 
-You can manage your billing plan [here](https://services.azureml.net/plans/).  Instructions on how to upgrade your plan are available [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice) under the "Managing billing plans" section.
+You can manage your billing plan [here](https://services.azureml.net/plans/).  The plan name will be based on the resource group name you chose when deploying the API, plus a string that is unique to your subscription.  Instructions on how to upgrade your plan are available [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice) under the "Managing billing plans" section.
