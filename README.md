@@ -11,4 +11,4 @@
 # Scaling the API
 This template will deploy a free Dev/Test billing plan.  You may wish to upgrade to larger plan.  Details on the pricing and compute resources of different plans are available [here](https://azure.microsoft.com/en-us/pricing/details/machine-learning/) under "Production Web API pricing".
 
-You can manage your billing plan [here](https://services.azureml.net/plans/).  Instructions on how to upgrade your plan are available [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice) under the "Manage New Web services" section.
+You can manage your billing plan [here](https://services.azureml.net/plans/).  Instructions on how to upgrade your plan are available [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice) under the "Managing billing plans" section.
