@@ -140,7 +140,7 @@
                                                      "Name":  "SpikeDetector",
                                                      "Type":  "Module",
                                                      "LocationInfo":  {
-                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_c0983bc7e2514bc58065dd0ff2261dbf.zip?sv=2015-02-21\u0026sr=b\u0026sig=uKIIJGhLZAN8viJua5a4Tkli1pq88%2BmdH5BMMSM7M8w%3D\u0026se=2017-01-12T21%3A22%3A27Z\u0026sp=r",
+                                                                          "Uri":  "https://adcustommodules.blob.core.windows.net/custommodules/SpikeDetector.zip",
                                                                           "Credentials":  ""
                                                                       },
                                                      "InputPorts":  {
@@ -201,7 +201,7 @@
                                                                       "host":  "DotNet",
                                                                       "FamilyId":  "3370ffac732040ed9c366f3094d85fa1"
                                                                   },
-                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_c0983bc7e2514bc58065dd0ff2261dbf.zip?sv=2015-02-21\u0026sr=b\u0026sig=uKIIJGhLZAN8viJua5a4Tkli1pq88%2BmdH5BMMSM7M8w%3D\u0026se=2017-01-12T21%3A22%3A27Z\u0026sp=r"
+                                                     "BlobUri":  "https://adcustommodules.blob.core.windows.net/custommodules/SpikeDetector.zip"
                                                  },
                                       "asset4":  {
                                                      "Name":  "Edit Metadata",
@@ -215,7 +215,7 @@
                                                      "Name":  "test.csv",
                                                      "Type":  "Resource",
                                                      "LocationInfo":  {
-                                                                          "Uri":  "https://corpwsstorage.blob.core.windows.net/uploadedresources/a0f433c37efd41d59950cf19b7859fb6.csv?sv=2015-02-21\u0026sr=b\u0026sig=ZerhW%2Bup45W0IgvHQ9k5V%2FE6diyBYUjnwAN%2BFcpG6Mk%3D\u0026se=2017-01-12T21%3A22%3A28Z\u0026sp=r",
+                                                                          "Uri":  "https://adcustommodules.blob.core.windows.net/custommodules/data.csv",
                                                                           "Credentials":  ""
                                                                       },
                                                      "OutputPorts":  {
@@ -585,8 +585,8 @@
                                                                    }
                                           }
                    }
-        },
-        {
+            },
+            {
             "apiVersion": "[variables('mlWsApiVersion')]",
             "name": "[variables('mlSeasonalityWebServiceName')]",
             "type": "Microsoft.MachineLearning/webservices",
