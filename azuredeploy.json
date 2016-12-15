@@ -1680,5 +1680,15 @@
                                           }
                    }
         }
-    ]
+    ],
+  "outputs": {
+    "mlWebServiceName": {
+      "type": "string",
+      "value": "[variables('mlWebServiceName')]"
+    },
+    "mlSeasonalityWebServiceName": {
+      "type": "string",
+      "value": "[variables('mlSeasonalityWebServiceName')]"
+    }
+  }
 }
