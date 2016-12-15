@@ -2,6 +2,14 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+      "billingPlanTier": {
+        "type": "string",
+        "defaultValue": "DevTest",
+        "allowedValues": [ "DevTest", "S1", "S2", "S3" ],
+        "metadata": {
+          "description": "Billing plan for AzureML Web Services.  Note that you are only allowed one DevTest plan per Azure subscription."
+        }
+      }
     },
     "variables": {
         "namePrefix": "[resourceGroup().name]",
@@ -13,7 +21,6 @@
         "mlWebSvcWebJobName": "AzureMlWebSvc",
         "mlWsApiVersion": "2016-05-01-preview",
         "planName": "[concat(variables('uniqueNamePrefix'),'plan')]",
-        "planSkuName": "DevTest",
         "planSkuTier": "Standard",
         "mlWebServiceName": "[concat(variables('uniqueNamePrefix'),'scoremlwebsvc')]",
         "mlWebserviceTitle": "[concat(variables('uniqueNamePrefix'),'scoremlwebsvc')]",
@@ -39,7 +46,7 @@
             "type": "Microsoft.MachineLearning/CommitmentPlans",
             "location": "[resourceGroup().location]",
             "sku": {
-                "name": "[variables('planSkuName')]",
+                "name": "[parameters('billingPlanTier')]",
                 "tier": "[variables('planSkuTier')]",
                 "capacity": "1"
             },
