@@ -4,7 +4,7 @@
 
 # Deployment Instructions
 1. Click the "Deploy to Azure" button above
-2. You will be required to chose a Resource Group name and a location where the resources will be deployed.
+2. You will be required to chose a Resource Group name and a location where the resources will be deployed.  You will also be able to choose a billing plan for the AzureML web services that will be deployed.  Note that you are only allowed one DevTest plan per Azure subscription.  If you already have a DevTest plan, you must chose a higher tier.
 3. Once the deployment completes, you will be able to find the Resource Group in the [Azure Portal](https://ms.portal.azure.com/#blade/HubsExtension/Resources/resourceType/Microsoft.Resources%2Fsubscriptions%2FresourceGroups).  The names of the resources will be based on the resource group name provided in step 2.
 4. You can manage the web services from the [Azure ML Web Services page](https://services.azureml.net/webservices/).  From here you can test the endpoints, find the API keys, read documentation, etc.  Detailed instructions are availabe [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice)
 
