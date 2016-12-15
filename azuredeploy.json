@@ -125,7 +125,8 @@
                                                                       "hostVersionId":  "3.1.0",
                                                                       "host":  "R",
                                                                       "FamilyId":  "80d70f92a27f424b88b3e62df9acfbfb"
-                                                                  }
+                                                                  },
+                                                     "BlobUri":  "https://adcustommodules.blob.core.windows.net/custommodules/TailJoin.zip"
                                                  },
                                       "asset2":  {
                                                      "Name":  "Select Columns in Dataset",
@@ -231,7 +232,7 @@
                                                                           "Credentials":  ""
                                                                       }
                                                  }
-                        },
+                                  },
                        "Parameters":  {
                                           "postprocess.tailRows":  "0",
                                           "tspikedetector.sensitivity":  "3",
@@ -332,30 +333,11 @@
                                                      "node2":  {
                                                                    "AssetId":  "asset2",
                                                                    "Parameters":  {
-                                                                                      "Select Columns":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%2C%22Data.x%22%2C%22TSpike%22%2C%22ZSpike%22%2C%22Martingale.values.x%22%2C%22Alert.indicator.x%22%2C%22Martingale.values.y%22%2C%22Alert.indicator.y%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D"
+                                                                                      "Select Columns":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%2C%22Data.x%22%2C%22TSpike%22%2C%22ZSpike%22%2C%22Anomaly.score.x%22%2C%22Alert.indicator.x%22%2C%22Anomaly.score.y%22%2C%22Alert.indicator.y%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D"
                                                                                   }
                                                                },
                                                      "node3":  {
                                                                    "AssetId":  "asset3",
-                                                                   "Parameters":  {
-                                                                                      "Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
-                                                                                      "Data Type":  "DateTime",
-                                                                                      "Categorical":  "Unchanged",
-                                                                                      "Fields":  "Unchanged"
-                                                                                  }
-                                                               },
-                                                     "node4":  {
-                                                                   "AssetId":  "asset3",
-                                                                   "Parameters":  {
-                                                                                      "Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data.x%22%2C%22Martingale.values.x%22%2C%22Alert.indicator.x%22%2C%22Martingale.values.y%22%2C%22Alert.indicator.y%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
-                                                                                      "Data Type":  "Unchanged",
-                                                                                      "Categorical":  "Unchanged",
-                                                                                      "Fields":  "Unchanged",
-                                                                                      "New Column Name":  "Data, rpscore, rpalert, tscore, talert"
-                                                                                  }
-                                                               },
-                                                     "node5":  {
-                                                                   "AssetId":  "asset5",
                                                                    "Parameters":  {
                                                                                       "Data column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
                                                                                       "Tukey Threshold":  "5",
@@ -363,32 +345,51 @@
                                                                                       "Detect Spike or Dip":  "Both"
                                                                                   }
                                                                },
+                                                     "node4":  {
+                                                                   "AssetId":  "asset4",
+                                                                   "Parameters":  {
+                                                                                      "Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Data Type":  "DateTime",
+                                                                                      "Categorical":  "Unchanged",
+                                                                                      "Fields":  "Unchanged"
+                                                                                  }
+                                                               },
+                                                     "node5":  {
+                                                                   "AssetId":  "asset4",
+                                                                   "Parameters":  {
+                                                                                      "Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data.x%22%2C%22Anomaly.score.x%22%2C%22Alert.indicator.x%22%2C%22Anomaly.score.y%22%2C%22Alert.indicator.y%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+                                                                                      "Data Type":  "Unchanged",
+                                                                                      "Categorical":  "Unchanged",
+                                                                                      "Fields":  "Unchanged",
+                                                                                      "New Column Name":  "Data, rpscore, rpalert, tscore, talert"
+                                                                                  }
+                                                               },
                                                      "node6":  {
                                                                    "AssetId":  "asset6",
                                                                    "Parameters":  {
-                                                                                      "Data column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
-                                                                                      "Time column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
-                                                                                      "Martingale":  "PowerAvg",
-                                                                                      "Strangeness":  "RangePercentile",
-                                                                                      "Martingale history":  "500",
-                                                                                      "Strangeness history":  "500",
-                                                                                      "Alert threshold":  "3.25"
+                                                                                      "Data Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Time Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Martingale Type":  "PowerAvg",
+                                                                                      "Strangeness Function Type":  "RangePercentile",
+                                                                                      "Length of Martingale History":  "500",
+                                                                                      "Length of Strangeness Value History":  "500",
+                                                                                      "Alert Threshold":  "3.25"
                                                                                   }
                                                                },
                                                      "node7":  {
                                                                    "AssetId":  "asset6",
                                                                    "Parameters":  {
-                                                                                      "Data column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
-                                                                                      "Time column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
-                                                                                      "Martingale":  "PowerAvg",
-                                                                                      "Strangeness":  "SlowPosTrend",
-                                                                                      "Martingale history":  "500",
-                                                                                      "Strangeness history":  "500",
-                                                                                      "Alert threshold":  "3.25"
+                                                                                      "Data Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Time Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Martingale Type":  "PowerAvg",
+                                                                                      "Strangeness Function Type":  "SlowPosTrend",
+                                                                                      "Length of Martingale History":  "500",
+                                                                                      "Length of Strangeness Value History":  "500",
+                                                                                      "Alert Threshold":  "3.25"
                                                                                   }
                                                                },
                                                      "node8":  {
-                                                                   "AssetId":  "asset4"
+                                                                   "AssetId":  "asset5"
                                                                },
                                                      "node9":  {
                                                                    "InputId":  "input1"
@@ -407,58 +408,58 @@
                                                      {
                                                          "SourceNodeId":  "node2",
                                                          "SourcePortId":  "Results dataset",
-                                                         "TargetNodeId":  "node4",
+                                                         "TargetNodeId":  "node5",
                                                          "TargetPortId":  "Dataset"
                                                      },
                                                      {
                                                          "SourceNodeId":  "node3",
-                                                         "SourcePortId":  "Results dataset",
-                                                         "TargetNodeId":  "node5",
-                                                         "TargetPortId":  "data"
-                                                     },
-                                                     {
-                                                         "SourceNodeId":  "node3",
-                                                         "SourcePortId":  "Results dataset",
-                                                         "TargetNodeId":  "node6",
-                                                         "TargetPortId":  "input"
-                                                     },
-                                                     {
-                                                         "SourceNodeId":  "node3",
-                                                         "SourcePortId":  "Results dataset",
-                                                         "TargetNodeId":  "node7",
-                                                         "TargetPortId":  "input"
-                                                     },
-                                                     {
-                                                         "SourceNodeId":  "node5",
                                                          "SourcePortId":  "spikesORdips",
                                                          "TargetNodeId":  "node1",
                                                          "TargetPortId":  "data_in1"
                                                      },
                                                      {
+                                                         "SourceNodeId":  "node4",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node3",
+                                                         "TargetPortId":  "data"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node4",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node6",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node4",
+                                                         "SourcePortId":  "Results dataset",
+                                                         "TargetNodeId":  "node7",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
                                                          "SourceNodeId":  "node6",
-                                                         "SourcePortId":  "table",
+                                                         "SourcePortId":  "Results dataset",
                                                          "TargetNodeId":  "node1",
                                                          "TargetPortId":  "data_in2"
                                                      },
                                                      {
                                                          "SourceNodeId":  "node7",
-                                                         "SourcePortId":  "table",
+                                                         "SourcePortId":  "Results dataset",
                                                          "TargetNodeId":  "node1",
                                                          "TargetPortId":  "data_in3"
                                                      },
                                                      {
                                                          "SourceNodeId":  "node8",
                                                          "SourcePortId":  "Results dataset",
-                                                         "TargetNodeId":  "node3",
+                                                         "TargetNodeId":  "node4",
                                                          "TargetPortId":  "Dataset"
                                                      },
                                                      {
                                                          "SourceNodeId":  "node9",
-                                                         "TargetNodeId":  "node3",
+                                                         "TargetNodeId":  "node4",
                                                          "TargetPortId":  "Dataset"
                                                      },
                                                      {
-                                                         "SourceNodeId":  "node4",
+                                                         "SourceNodeId":  "node5",
                                                          "SourcePortId":  "Results dataset",
                                                          "TargetNodeId":  "node10"
                                                      }
@@ -479,7 +480,7 @@
                                                                                                   "Description":  "tspikedetector.sensitivity",
                                                                                                   "Links":  [
                                                                                                                 {
-                                                                                                                    "NodeId":  "node5",
+                                                                                                                    "NodeId":  "node3",
                                                                                                                     "ParameterKey":  "Tukey Threshold"
                                                                                                                 }
                                                                                                             ]
@@ -489,7 +490,7 @@
                                                                                                   "Description":  "zspikedetector.sensitivity",
                                                                                                   "Links":  [
                                                                                                                 {
-                                                                                                                    "NodeId":  "node5",
+                                                                                                                    "NodeId":  "node3",
                                                                                                                     "ParameterKey":  "Zscore Threshold"
                                                                                                                 }
                                                                                                             ]
@@ -500,19 +501,19 @@
                                                                                                "Links":  [
                                                                                                              {
                                                                                                                  "NodeId":  "node6",
-                                                                                                                 "ParameterKey":  "Martingale history"
+                                                                                                                 "ParameterKey":  "Length of Martingale History"
                                                                                                              },
                                                                                                              {
                                                                                                                  "NodeId":  "node6",
-                                                                                                                 "ParameterKey":  "Strangeness history"
+                                                                                                                 "ParameterKey":  "Length of Strangeness Value History"
                                                                                                              },
                                                                                                              {
                                                                                                                  "NodeId":  "node7",
-                                                                                                                 "ParameterKey":  "Martingale history"
+                                                                                                                 "ParameterKey":  "Length of Martingale History"
                                                                                                              },
                                                                                                              {
                                                                                                                  "NodeId":  "node7",
-                                                                                                                 "ParameterKey":  "Strangeness history"
+                                                                                                                 "ParameterKey":  "Length of Strangeness Value History"
                                                                                                              }
                                                                                                          ]
                                                                                            },
@@ -522,7 +523,7 @@
                                                                                                    "Links":  [
                                                                                                                  {
                                                                                                                      "NodeId":  "node6",
-                                                                                                                     "ParameterKey":  "Alert threshold"
+                                                                                                                     "ParameterKey":  "Alert Threshold"
                                                                                                                  }
                                                                                                              ]
                                                                                                },
@@ -532,7 +533,7 @@
                                                                                                  "Links":  [
                                                                                                                {
                                                                                                                    "NodeId":  "node7",
-                                                                                                                   "ParameterKey":  "Alert threshold"
+                                                                                                                   "ParameterKey":  "Alert Threshold"
                                                                                                                }
                                                                                                            ]
                                                                                              },
@@ -541,7 +542,7 @@
                                                                                             "Description":  "detectors.spikesdips",
                                                                                             "Links":  [
                                                                                                           {
-                                                                                                              "NodeId":  "node5",
+                                                                                                              "NodeId":  "node3",
                                                                                                               "ParameterKey":  "Detect Spike or Dip"
                                                                                                           }
                                                                                                       ]
