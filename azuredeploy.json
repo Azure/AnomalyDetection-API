@@ -76,12 +76,12 @@
                 "MachineLearningWorkspace": {
                     "Id": "3a4a8c0191ee462fa185189f3ecd1799"
                 },
-                 "Assets":  {
+                "Assets":  {
                                       "asset1":  {
                                                      "Name":  "Tail Join",
                                                      "Type":  "Module",
                                                      "LocationInfo":  {
-                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_74d0a3ae250842358a1a235529e74ccd.zip?sv=2015-02-21\u0026sr=b\u0026sig=FQOXnVCjZO7MJimJPjQHWawEFSHGDttbRewlbuPXmRc%3D\u0026se=2016-12-30T21%3A23%3A47Z\u0026sp=r",
+                                                                          "Uri":  "https://adcustommodules.blob.core.windows.net/custommodules/TailJoin.zip",
                                                                           "Credentials":  ""
                                                                       },
                                                      "InputPorts":  {
@@ -125,8 +125,7 @@
                                                                       "hostVersionId":  "3.1.0",
                                                                       "host":  "R",
                                                                       "FamilyId":  "80d70f92a27f424b88b3e62df9acfbfb"
-                                                                  },
-                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_74d0a3ae250842358a1a235529e74ccd.zip?sv=2015-02-21\u0026sr=b\u0026sig=FQOXnVCjZO7MJimJPjQHWawEFSHGDttbRewlbuPXmRc%3D\u0026se=2016-12-30T21%3A23%3A47Z\u0026sp=r"
+                                                                  }
                                                  },
                                       "asset2":  {
                                                      "Name":  "Select Columns in Dataset",
@@ -137,31 +136,10 @@
                                                                       }
                                                  },
                                       "asset3":  {
-                                                     "Name":  "Edit Metadata",
-                                                     "Type":  "Module",
-                                                     "LocationInfo":  {
-                                                                          "Uri":  "aml://module/506153734175476c4f62416c57734963.370b6676c11c486fbf7335349f842a66.v1-default-1729",
-                                                                          "Credentials":  ""
-                                                                      }
-                                                 },
-                                      "asset4":  {
-                                                     "Name":  "test.csv",
-                                                     "Type":  "Resource",
-                                                     "LocationInfo":  {
-                                                                          "Uri":  "https://corpwsstorage.blob.core.windows.net/uploadedresources/a0f433c37efd41d59950cf19b7859fb6.csv?sv=2015-02-21\u0026sr=b\u0026sig=XG85sJ%2BTBLWjeuW2%2B%2F0GE0eeRfkp279v3krRRybyKrI%3D\u0026se=2016-12-30T21%3A23%3A48Z\u0026sp=r",
-                                                                          "Credentials":  ""
-                                                                      },
-                                                     "OutputPorts":  {
-                                                                         "Results dataset":  {
-                                                                                                 "Type":  "Dataset"
-                                                                                             }
-                                                                     }
-                                                 },
-                                      "asset5":  {
                                                      "Name":  "SpikeDetector",
                                                      "Type":  "Module",
                                                      "LocationInfo":  {
-                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_c0983bc7e2514bc58065dd0ff2261dbf.zip?sv=2015-02-21\u0026sr=b\u0026sig=JZ1Cw4raJ8nQRx8V3PRUyUreeXqSxiG2nMDS7K4g%2B2s%3D\u0026se=2016-12-30T21%3A23%3A48Z\u0026sp=r",
+                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_c0983bc7e2514bc58065dd0ff2261dbf.zip?sv=2015-02-21\u0026sr=b\u0026sig=uKIIJGhLZAN8viJua5a4Tkli1pq88%2BmdH5BMMSM7M8w%3D\u0026se=2017-01-12T21%3A22%3A27Z\u0026sp=r",
                                                                           "Credentials":  ""
                                                                       },
                                                      "InputPorts":  {
@@ -222,123 +200,38 @@
                                                                       "host":  "DotNet",
                                                                       "FamilyId":  "3370ffac732040ed9c366f3094d85fa1"
                                                                   },
-                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_c0983bc7e2514bc58065dd0ff2261dbf.zip?sv=2015-02-21\u0026sr=b\u0026sig=JZ1Cw4raJ8nQRx8V3PRUyUreeXqSxiG2nMDS7K4g%2B2s%3D\u0026se=2016-12-30T21%3A23%3A48Z\u0026sp=r"
+                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_c0983bc7e2514bc58065dd0ff2261dbf.zip?sv=2015-02-21\u0026sr=b\u0026sig=uKIIJGhLZAN8viJua5a4Tkli1pq88%2BmdH5BMMSM7M8w%3D\u0026se=2017-01-12T21%3A22%3A27Z\u0026sp=r"
                                                  },
-                                      "asset6":  {
-                                                     "Name":  "Change Detection",
+                                      "asset4":  {
+                                                     "Name":  "Edit Metadata",
                                                      "Type":  "Module",
                                                      "LocationInfo":  {
-                                                                          "Uri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_d15782bb423a402db6fb9e173fc58be5.zip?sv=2015-02-21\u0026sr=b\u0026sig=YCnS42awGoLWwnLCHK7h7RQIzCTRR10fHe6geCKQmbo%3D\u0026se=2016-12-30T21%3A23%3A48Z\u0026sp=r",
+                                                                          "Uri":  "aml://module/506153734175476c4f62416c57734963.370b6676c11c486fbf7335349f842a66.v1-default-1742",
+                                                                          "Credentials":  ""
+                                                                      }
+                                                 },
+                                      "asset5":  {
+                                                     "Name":  "test.csv",
+                                                     "Type":  "Resource",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "https://corpwsstorage.blob.core.windows.net/uploadedresources/a0f433c37efd41d59950cf19b7859fb6.csv?sv=2015-02-21\u0026sr=b\u0026sig=ZerhW%2Bup45W0IgvHQ9k5V%2FE6diyBYUjnwAN%2BFcpG6Mk%3D\u0026se=2017-01-12T21%3A22%3A28Z\u0026sp=r",
                                                                           "Credentials":  ""
                                                                       },
-                                                     "InputPorts":  {
-                                                                        "input":  {
-                                                                                      "Type":  "Dataset"
-                                                                                  }
-                                                                    },
                                                      "OutputPorts":  {
-                                                                         "table":  {
-                                                                                       "Type":  "Dataset"
-                                                                                   }
-                                                                     },
-                                                     "Id":  "3a4a8c0191ee462fa185189f3ecd1799.ce9d2d92ebfd437193aa1a6238f20a4d.v1-default-171",
-                                                     "Parameters":  [
-                                                                        {
-                                                                            "Name":  "Data column",
-                                                                            "ParameterType":  "ColumnPicker"
-                                                                        },
-                                                                        {
-                                                                            "Name":  "Time column",
-                                                                            "ParameterType":  "ColumnPicker"
-                                                                        },
-                                                                        {
-                                                                            "Name":  "Martingale",
-                                                                            "ParameterType":  "Mode",
-                                                                            "ModeValuesInfo":  {
-                                                                                                   "Power":  {
-                                                                                                                 "InterfaceString":  "/dll \"ChangeDetection, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.ChangeDetection;EntryPoint\" /Output0 {out:Dataset:table} /inputData {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:input} /dataColumn \"(Data column:columnpicker,input,True,All,)\" /timeColumn \"(Time column:columnpicker,input,True,All,)\" /martingale \"(Martingale:enum,Power,PowerAvg:default,PowerAvg)\" /strangeness \"(Strangeness:enum,DistanceBased,Percentile,RangePercentile,Median,SlowPosTrend,SlowNegTrend:default,RangePercentile)\" /martingaleHistory \"(Martingale history:int,10,1000:default,500)\" /strangenessHistory \"(Strangeness history:int,10,1000:default,500)\" /thresh \"(Alert threshold:double,0,100:default,3.25)\" /epsilon \"(Epsilon:double,0,1:default,0.9)\" ",
-                                                                                                                 "Parameters":  [
-                                                                                                                                    {
-                                                                                                                                        "Name":  "Epsilon",
-                                                                                                                                        "ParameterType":  "Double"
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                             },
-                                                                                                   "PowerAvg":  {
-                                                                                                                    "InterfaceString":  "/dll \"ChangeDetection, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.ChangeDetection;EntryPoint\" /Output0 {out:Dataset:table} /inputData {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:input} /dataColumn \"(Data column:columnpicker,input,True,All,)\" /timeColumn \"(Time column:columnpicker,input,True,All,)\" /martingale \"(Martingale:enum,Power,PowerAvg:default,PowerAvg)\" /strangeness \"(Strangeness:enum,DistanceBased,Percentile,RangePercentile,Median,SlowPosTrend,SlowNegTrend:default,RangePercentile)\" /martingaleHistory \"(Martingale history:int,10,1000:default,500)\" /strangenessHistory \"(Strangeness history:int,10,1000:default,500)\" /thresh \"(Alert threshold:double,0,100:default,3.25)\" ",
-                                                                                                                    "Parameters":  [
-
-                                                                                                                                   ]
-                                                                                                                }
-                                                                                               }
-                                                                        },
-                                                                        {
-                                                                            "Name":  "Strangeness",
-                                                                            "ParameterType":  "Enumerated",
-                                                                            "ModeValuesInfo":  {
-                                                                                                   "DistanceBased":  {
-                                                                                                                         "InterfaceString":  "",
-                                                                                                                         "Parameters":  [
-
-                                                                                                                                        ]
-                                                                                                                     },
-                                                                                                   "Percentile":  {
-                                                                                                                      "InterfaceString":  "",
-                                                                                                                      "Parameters":  [
-
-                                                                                                                                     ]
-                                                                                                                  },
-                                                                                                   "RangePercentile":  {
-                                                                                                                           "InterfaceString":  "",
-                                                                                                                           "Parameters":  [
-
-                                                                                                                                          ]
-                                                                                                                       },
-                                                                                                   "Median":  {
-                                                                                                                  "InterfaceString":  "",
-                                                                                                                  "Parameters":  [
-
-                                                                                                                                 ]
-                                                                                                              },
-                                                                                                   "SlowPosTrend":  {
-                                                                                                                        "InterfaceString":  "",
-                                                                                                                        "Parameters":  [
-
-                                                                                                                                       ]
-                                                                                                                    },
-                                                                                                   "SlowNegTrend":  {
-                                                                                                                        "InterfaceString":  "",
-                                                                                                                        "Parameters":  [
-
-                                                                                                                                       ]
-                                                                                                                    }
-                                                                                               }
-                                                                        },
-                                                                        {
-                                                                            "Name":  "Martingale history",
-                                                                            "ParameterType":  "Int"
-                                                                        },
-                                                                        {
-                                                                            "Name":  "Strangeness history",
-                                                                            "ParameterType":  "Int"
-                                                                        },
-                                                                        {
-                                                                            "Name":  "Alert threshold",
-                                                                            "ParameterType":  "Double"
-                                                                        }
-                                                                    ],
-                                                     "Metadata":  {
-                                                                      "UseDrawBridge":  null,
-                                                                      "runTimeVersionId":  "6.0",
-                                                                      "InterfaceString":  "/dll \"ChangeDetection, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.ChangeDetection;EntryPoint\" /Output0 {out:Dataset:table} /inputData {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:input} /dataColumn \"(Data column:columnpicker,input,True,All,)\" /timeColumn \"(Time column:columnpicker,input,True,All,)\" /martingale \"(Martingale:enum,Power,PowerAvg:default,PowerAvg)\" /strangeness \"(Strangeness:enum,DistanceBased,Percentile,RangePercentile,Median,SlowPosTrend,SlowNegTrend:default,RangePercentile)\" /martingaleHistory \"(Martingale history:int,10,1000:default,500)\" /strangenessHistory \"(Strangeness history:int,10,1000:default,500)\" /epsilon \"(Epsilon:double,0,1:default,0.9)\" /thresh \"(Alert threshold:double,0,100:default,3.25)\" ",
-                                                                      "Description":  "Detects anomalies in the input time series. Returns anomaly score and alert indicator",
-                                                                      "hostVersionId":  "4.5.0",
-                                                                      "host":  "DotNet",
-                                                                      "FamilyId":  "ce9d2d92ebfd437193aa1a6238f20a4d"
-                                                                  },
-                                                     "BlobUri":  "https://estableprodussouth2.blob.core.windows.net/uploadedresources009/60389_3a4a8c0191ee462fa185189f3ecd1799_d15782bb423a402db6fb9e173fc58be5.zip?sv=2015-02-21\u0026sr=b\u0026sig=YCnS42awGoLWwnLCHK7h7RQIzCTRR10fHe6geCKQmbo%3D\u0026se=2016-12-30T21%3A23%3A48Z\u0026sp=r"
+                                                                         "Results dataset":  {
+                                                                                                 "Type":  "Dataset"
+                                                                                             }
+                                                                     }
+                                                 },
+                                      "asset6":  {
+                                                     "Name":  "Time Series Anomaly Detection",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "aml://module/506153734175476c4f62416c57734963.96b98cc050df46ffbc18c0665d69f3e3.v1-default-1743",
+                                                                          "Credentials":  ""
+                                                                      }
                                                  }
-                                  },
+                        },
                        "Parameters":  {
                                           "postprocess.tailRows":  "0",
                                           "tspikedetector.sensitivity":  "3",
