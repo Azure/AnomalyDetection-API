@@ -9,6 +9,6 @@
 4. You can manage the web services from the [Azure ML Web Services page](https://services.azureml.net/webservices/).  From here you can test the endpoints, find the API keys, read documentation, etc.  Detailed instructions are availabe [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice)
 
 # Scaling the API
-This template will deploy a free Dev/Test billing plan.  You may wish to upgrade to larger plan.  Details on the pricing and compute resources of different plans are available [here](https://azure.microsoft.com/en-us/pricing/details/machine-learning/) under "Production Web API pricing".
+This template will deploy a free Dev/Test billing plan by default.  You may wish to upgrade to larger plan.  Details on the pricing and compute resources of different plans are available [here](https://azure.microsoft.com/en-us/pricing/details/machine-learning/) under "Production Web API pricing".
 
 You can manage your billing plan [here](https://services.azureml.net/plans/).  The plan name will be based on the resource group name you chose when deploying the API, plus a string that is unique to your subscription.  Instructions on how to upgrade your plan are available [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice) under the "Managing billing plans" section.
