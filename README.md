@@ -3,7 +3,7 @@
 [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](http://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FAnomalyDetection-API%2Fmaster%2Fazuredeploy.json)
 
 # Introduction
-The Anomaly Detection API can help identify anomalous data points in time series data (more details [here](https://gallery.cortanaintelligence.com/MachineLearningAPI/Anomaly-Detection-2)).  This reposity contains an [ARM template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview) that will deploy the API to your Azure subscription.
+The Anomaly Detection API can help identify anomalous data points in time series data (more details [here](https://gallery.cortanaintelligence.com/MachineLearningAPI/Anomaly-Detection-2)).  This reposity contains an [ARM template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview) that will deploy the API to your Azure subscription as an [Azure Machine Learning Web Service](https://services.azureml.net/).
 
 # Deployment Instructions
 1. Click the "Deploy to Azure" button above
