@@ -17,4 +17,4 @@ This template will deploy a free Dev/Test billing plan by default.  You may wish
 You can manage your billing plan [here](https://services.azureml.net/plans/).  The plan name will be based on the resource group name you chose when deploying the API, plus a string that is unique to your subscription.  Instructions on how to upgrade your plan are available [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice) under the "Managing billing plans" section.
 
 # Contact
-If you have any further issues or questions, please [email us](mailto:adpcs_support@microsoft.com).
+If you have any further issues or questions, please [email us](mailto:admlsupport@microsoft.com).
