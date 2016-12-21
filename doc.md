@@ -33,6 +33,52 @@ You can manage your billing plan [here](https://services.azureml.net/plans/).  T
 ## API Definition
 The web service provides a REST-based API over HTTPS that can be consumed in different ways including a web or mobile application, R, Python, Excel, etc.  You send your time series data to this service via a REST API call, and it runs a combination of the three anomaly types described above.
 
+## Calling the API
+In order to call the API, you will need to know the endpoint location and API key.  Both of these, along with sample code for calling the API, is available from the [AzureML web services](https://services.azureml.net/webservices/) page.  Navigate to the desired API, and then click the "Consume" tab to find them.  Note that you can call the API as a Swagger API (i.e. with the URL parameter `format=swagger`) or as a non-Swagger API (i.e. without the `format` URL parameter).  The sample code uses the Swagger format.  Below is an example re
+quest and response in non-Swagger format.
+
+## Sample Request Body
+
+	{
+		"Inputs": {
+			"input1": {
+				"ColumnNames": ["Time", "Data"],
+				"Values": [
+					["5/30/2010 18:07:00", "1"],
+					["5/30/2010 18:08:00", "9"],
+					["5/30/2010 18:09:00", "1.1"]
+				]
+			}
+		},
+		"GlobalParameters": {
+			"tspikedetector.sensitivity": "1",
+			"zspikedetector.sensitivity": "1",
+			"bileveldetector.sensitivity": "1",
+			"detectors.spikesdips": "Both"
+		}
+	}
+
+## Sample Response
+Note that, in order to see the `ColumnNames` field, you must include `details=true` as a URL parameter in your request.
+
+	{
+		"Results": {
+			"output1": {
+				"value": {
+					"ColumnTypes": ["DateTime", "Double", "Double", "Double", "Int32", "Double", "Int32", "Double", "Int32"],
+					"Values": [
+						["5/30/2010 6:07:00 PM", "1", "1", "-0.687952590518378", "0", "-0.687952590518378", "0", "-0.687952590518378", "0"],
+						["5/30/2010 6:08:00 PM", "9", "9", "-1.08285020381696", "0", "-0.884548154298423", "0", "-1.07030497733224", "0"],
+						["5/30/2010 6:09:00 PM", "1.1", "1.1", "-1.31272416034067", "0", "-1.173800281031", "0", "-1.30229513613974", "0"]
+					],
+					"ColumnNames": ["Time", "OriginalData", "ProcessedData", "BiLevelChangeScore", "BiLevelChangeAlert", "PosTrendScore", "PosTrendAlert", "NegTrendScore", "NegTrendAlert"]
+				},
+				"type": "table"
+			}
+		}
+	}
+
+
 ### Score API
 The Score API is used for running anomaly detection on non-seasonal time series data. The API runs a number of anomaly detectors on the data and returns their anomaly scores. 
 The figure below shows an example of anomalies that the Score API can detect. This time series has 2 distinct level changes, and 3 spikes. The red dots show the time at which the level change is detected, while the black dots show the detected spikes.
