@@ -51,6 +51,7 @@ The anomaly detection API supports detectors in 3 broad categories. Details on s
 
 ### Parameters
 More detailed information on these input parameters is listed in the table below:
+
 | Input Parameters | Description | Default Setting | Type | Valid Range | Suggested Range |
 | --- | --- | --- | --- | --- | --- |
 | detectors.historyWindow |History (in # of data points) used for  anomaly score computation |500 |integer |10-2000 |Time-series dependent |
