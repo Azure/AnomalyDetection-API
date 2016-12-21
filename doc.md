@@ -34,7 +34,7 @@ You can manage your billing plan [here](https://services.azureml.net/plans/).  T
 The web service provides a REST-based API over HTTPS that can be consumed in different ways including a web or mobile application, R, Python, Excel, etc.  You send your time series data to this service via a REST API call, and it runs a combination of the three anomaly types described above.
 
 ## Calling the API
-In order to call the API, you will need to know the endpoint location and API key.  Both of these, along with sample code for calling the API, is available from the [AzureML web services](https://services.azureml.net/webservices/) page.  Navigate to the desired API, and then click the "Consume" tab to find them.  Note that you can call the API as a Swagger API (i.e. with the URL parameter `format=swagger`) or as a non-Swagger API (i.e. without the `format` URL parameter).  The sample code uses the Swagger format.  Below is an example request and response in non-Swagger format.  These examples are to the non-seasonality endpoint.  The seasonality endpoint is similar.
+In order to call the API, you will need to know the endpoint location and API key.  Both of these, along with sample code for calling the API, is available from the [AzureML web services](https://services.azureml.net/webservices/) page.  Navigate to the desired API, and then click the "Consume" tab to find them.  Note that you can call the API as a Swagger API (i.e. with the URL parameter `format=swagger`) or as a non-Swagger API (i.e. without the `format` URL parameter).  The sample code uses the Swagger format.  Below is an example request and response in non-Swagger format.  These examples are to the seasonality endpoint.  The non-seasonality endpoint is similar.
 
 ### Sample Request Body
 
@@ -50,9 +50,9 @@ In order to call the API, you will need to know the endpoint location and API ke
 			}
 		},
 		"GlobalParameters": {
-			"tspikedetector.sensitivity": "1",
-			"zspikedetector.sensitivity": "1",
-			"bileveldetector.sensitivity": "1",
+			"tspikedetector.sensitivity": "3",
+			"zspikedetector.sensitivity": "3",
+			"bileveldetector.sensitivity": "3.25",
 			"detectors.spikesdips": "Both"
 		}
 	}
