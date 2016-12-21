@@ -87,10 +87,10 @@ The anomaly detection API supports detectors in 3 broad categories. Details on s
 | Detector Category | Detector | Description | Input Parameters | Outputs |
 | --- | --- | --- | --- | --- |
 | Spike Detectors |TSpike Detector |Detect spikes and dips based on far the values are from first and third quartiles |*tspikedetector.sensitivity:* takes integer value in the range 1-10, default: 3; Higher values will catch more extreme values thus making it less sensitive |TSpike: binary values – ‘1’ if a spike/dip is detected, ‘0’ otherwise |
-| ZSpike Detector |Detect spikes and dips based on how far the datapoints are from their mean |*zspikedetector.sensitivity:* take integer value in the range 1-10, default: 3; Higher values will catch more extreme values making it less sensitive |ZSpike: binary values – ‘1’ if a spike/dip is detected, ‘0’ otherwise | |
+| Spike Detectors | ZSpike Detector |Detect spikes and dips based on how far the datapoints are from their mean |*zspikedetector.sensitivity:* take integer value in the range 1-10, default: 3; Higher values will catch more extreme values making it less sensitive |ZSpike: binary values – ‘1’ if a spike/dip is detected, ‘0’ otherwise | |
 | Slow Trend Detector |Slow Trend Detector |Detect slow positive trend as per the set sensitivity |*trenddetector.sensitivity:* threshold on detector score (default: 3.25, 3.25 – 5 is a reasonable range to select this from; The higher the less sensitive) |TScore: floating number representing anomaly score on trend |
 | Level Change Detectors |Unidirectional Level Change Detector |Detect upward level change as per the set sensitivity |*upleveldetector.sensitivity:* threshold on detector score (default: 3.25, 3.25 – 5 is a reasonable range to select this from; The higher the less sensitive) |PScore: floating number representing anomaly score on upward level change |
-| Bidirectional Level Change Detector |Detect both upward and downward level change as per the set sensitivity |*bileveldetector.sensitivity:* threshold on detector score (default: 3.25, 3.25 – 5 is a reasonable range to select this from; The higher the less sensitive) |RPScore: floating number representing anomaly score on upward and downward level change | |
+| Level Change Detectors | Bidirectional Level Change Detector |Detect both upward and downward level change as per the set sensitivity |*bileveldetector.sensitivity:* threshold on detector score (default: 3.25, 3.25 – 5 is a reasonable range to select this from; The higher the less sensitive) |RPScore: floating number representing anomaly score on upward and downward level change | |
 
 ### Parameters
 More detailed information on these input parameters is listed in the table below:
@@ -114,8 +114,6 @@ The API runs all detectors on your time series data and returns anomaly scores a
 | Data |Values from raw data, or aggregated (and/or) imputed data if aggregation (and/or) missing data imputation is applied |
 | TSpike |Binary indicator to indicate whether a spike is detected by TSpike Detector |
 | ZSpike |Binary indicator to indicate whether a spike is detected by ZSpike Detector |
-| Pscore |A floating number representing anomaly score on upward level change |
-| Palert |1/0 value indicating there is an upward level change anomaly based on the input sensitivity |
 | RPScore |A floating number representing anomaly score on bidirectional level change |
 | RPAlert |1/0 value indicating there is a bidirectional level change anomaly based on the input sensitivity |
 | TScore |A floating number representing anomaly score on positive trend |
