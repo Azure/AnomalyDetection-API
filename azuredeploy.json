@@ -933,7 +933,7 @@
                                                      "Name":  "fabric1double.csv",
                                                      "Type":  "Resource",
                                                      "LocationInfo":  {
-                                                                          "Uri":  "https://adcustommodules.blob.core.windows.net/custommodules/SeasonalityAnalysis.zip",
+                                                                          "Uri":  "https://adcustommodules.blob.core.windows.net/custommodules/fabric1double.csv",
                                                                           "Credentials":  ""
                                                                       },
                                                      "OutputPorts":  {
@@ -1016,6 +1016,16 @@
                                                                                                                   "Format":  "Double",
                                                                                                                   "x-ms-isnullable":  false
                                                                                                               },
+                                                                                            "TSpike":  {
+                                                                                                           "Type":  "Number",
+                                                                                                           "Format":  "Double",
+                                                                                                           "x-ms-isnullable":  false
+                                                                                                       },
+                                                                                            "ZSpike":  {
+                                                                                                           "Type":  "Number",
+                                                                                                           "Format":  "Double",
+                                                                                                           "x-ms-isnullable":  false
+                                                                                                       },
                                                                                             "BiLevelChangeScore":  {
                                                                                                                        "Type":  "Number",
                                                                                                                        "Format":  "Double",
@@ -1072,7 +1082,7 @@
                                                      "node3":  {
                                                                    "AssetId":  "asset3",
                                                                    "Parameters":  {
-                                                                                      "Select Columns":  "%7B%22isFilter%22%3Afalse%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%2C%22Data%22%2C%22Data.x%22%2C%22Anomaly.score.x%22%2C%22Alert.indicator.x%22%2C%22Anomaly.score.y%22%2C%22Alert.indicator.y%22%2C%22Anomaly.score%22%2C%22Alert.indicator%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D"
+                                                                                      "Select Columns":  "%7B%22isFilter%22%3Afalse%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%2C%22Data%22%2C%22Data.x%22%2C%22TSpike%22%2C%22ZSpike%22%2C%22Anomaly.score.x%22%2C%22Alert.indicator.x%22%2C%22Anomaly.score.y%22%2C%22Alert.indicator.y%22%2C%22Anomaly.score%22%2C%22Alert.indicator%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D"
                                                                                   }
                                                                },
                                                      "node4":  {
@@ -1464,7 +1474,7 @@
                                                                    }
                                           }
                    }
-          }
+            }
     ],
   "outputs": {
     "mlWebServiceName": {
