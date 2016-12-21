@@ -39,15 +39,13 @@ In order to call the API, you will need to know the endpoint location and API ke
 ### Sample Request Body
 
 	{
-		"Inputs": {
-			"input1": {
-				"ColumnNames": ["Time", "Data"],
-				"Values": [
-					["5/30/2010 18:07:00", "1"],
-					["5/30/2010 18:08:00", "9"],
-					["5/30/2010 18:09:00", "1.1"]
-				]
-			}
+		"input1": {
+			"ColumnNames": ["Time", "Data"],
+			"Values": [
+				["5/30/2010 18:07:00", "1"],
+				["5/30/2010 18:08:00", "1.4"],
+				["5/30/2010 18:09:00", "1.1"]
+			]
 		},
 		"GlobalParameters": {
 			"tspikedetector.sensitivity": "3",
@@ -63,16 +61,16 @@ Note that, in order to see the `ColumnNames` field, you must include `details=tr
 	{
 		"Results": {
 			"output1": {
+				"type": "table",
 				"value": {
-					"ColumnTypes": ["DateTime", "Double", "Double", "Double", "Int32", "Double", "Int32", "Double", "Int32"],
 					"Values": [
-						["5/30/2010 6:07:00 PM", "1", "1", "-0.687952590518378", "0", "-0.687952590518378", "0", "-0.687952590518378", "0"],
-						["5/30/2010 6:08:00 PM", "9", "9", "-1.08285020381696", "0", "-0.884548154298423", "0", "-1.07030497733224", "0"],
-						["5/30/2010 6:09:00 PM", "1.1", "1.1", "-1.31272416034067", "0", "-1.173800281031", "0", "-1.30229513613974", "0"]
+						["5/30/2010 6:07:00 PM", "1", "1", "0", "0", "-0.687952590518378", "0", "-0.687952590518378", "0", "-0.687952590518378", "0"],
+						["5/30/2010 6:08:00 PM", "1.4", "1.4", "0", "0", "-1.07030497733224", "0", "-0.884548154298423", "0", "-1.07030497733224", "0"],
+						["5/30/2010 6:09:00 PM", "1.1", "1.1", "0", "0", "-1.30229513613974", "0", "-1.173800281031", "0", "-1.30229513613974", "0"]
 					],
-					"ColumnNames": ["Time", "OriginalData", "ProcessedData", "BiLevelChangeScore", "BiLevelChangeAlert", "PosTrendScore", "PosTrendAlert", "NegTrendScore", "NegTrendAlert"]
-				},
-				"type": "table"
+					"ColumnNames": ["Time", "OriginalData", "ProcessedData", "TSpike", "ZSpike", "BiLevelChangeScore", "BiLevelChangeAlert", "PosTrendScore", "PosTrendAlert", "NegTrendScore", "NegTrendAlert"],
+					"ColumnTypes": ["DateTime", "Double", "Double", "Double", "Double", "Double", "Int32", "Double", "Int32", "Double", "Int32"]
+				}
 			}
 		}
 	}
