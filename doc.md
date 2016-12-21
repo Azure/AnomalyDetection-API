@@ -25,7 +25,7 @@ The Anomaly Detection offering comes with useful tools to get you started.
 You can deploy the API to your Azure subscription from the [Cortana Intelligence Gallery](https://gallery.cortanaintelligence.com/MachineLearningAPI/Anomaly-Detection-2).  This will deploy two AzureML Web Services (and their related resources) to your Azure subscription - one for anomaly detection with seasonality detection, and one without seasonality detection.  Once the deployment has completed, you will be able to manage your APIs from the [AzureML web services](https://services.azureml.net/webservices/) page.  From this page, you will be able to find your endpoint locations, API keys, as well as sample code for calling the API.  More detailed instructions are available [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice).
 
 ## Scaling the API
-This template will deploy a free Dev/Test billing plan which includes 1,000 transactions/month and 2 compute hours/month.  You can upgrade to another plan as per your needs.  Details on the pricing of different plans are available [here](https://azure.microsoft.com/en-us/pricing/details/machine-learning/) under "Production Web API pricing".
+By default, your deployment will have a free Dev/Test billing plan which includes 1,000 transactions/month and 2 compute hours/month.  You can upgrade to another plan as per your needs.  Details on the pricing of different plans are available [here](https://azure.microsoft.com/en-us/pricing/details/machine-learning/) under "Production Web API pricing".
 
 ## Managing AML Plans 
 You can manage your billing plan [here](https://services.azureml.net/plans/).  The plan name will be based on the resource group name you chose when deploying the API, plus a string that is unique to your subscription.  Instructions on how to upgrade your plan are available [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice) under the "Managing billing plans" section.
@@ -48,6 +48,7 @@ The anomaly detection API supports detectors in 3 broad categories. Details on s
 | Slow Trend Detector |Slow Trend Detector |Detect slow positive trend as per the set sensitivity |*trenddetector.sensitivity:* threshold on detector score (default: 3.25, 3.25 – 5 is a reasonable range to select this from; The higher the less sensitive) |TScore: floating number representing anomaly score on trend |
 | Level Change Detectors |Unidirectional Level Change Detector |Detect upward level change as per the set sensitivity |*upleveldetector.sensitivity:* threshold on detector score (default: 3.25, 3.25 – 5 is a reasonable range to select this from; The higher the less sensitive) |PScore: floating number representing anomaly score on upward level change |
 | Bidirectional Level Change Detector |Detect both upward and downward level change as per the set sensitivity |*bileveldetector.sensitivity:* threshold on detector score (default: 3.25, 3.25 – 5 is a reasonable range to select this from; The higher the less sensitive) |RPScore: floating number representing anomaly score on upward and downward level change | |
+
 ### Parameters
 More detailed information on these input parameters is listed in the table below:
 | Input Parameters | Description | Default Setting | Type | Valid Range | Suggested Range |
