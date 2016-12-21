@@ -31,12 +31,13 @@ By default, your deployment will have a free Dev/Test billing plan which include
 You can manage your billing plan [here](https://services.azureml.net/plans/).  The plan name will be based on the resource group name you chose when deploying the API, plus a string that is unique to your subscription.  Instructions on how to upgrade your plan are available [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice) under the "Managing billing plans" section.
 
 ## API Definition
-The web service provides a REST-based API over HTTPS that can be consumed in different ways including a web or mobile application, R, Python, Excel, etc.  You send your time series data to this service via a REST API call, and it runs a combination of the three anomaly types described above.
+The web service provides a REST-based API over HTTPS that can be consumed in different ways including a web or mobile application, R, Python, Excel, etc.  You send your time series data to this service via a REST API call, and it runs a combination of the three anomaly types described below.
 
 ## Calling the API
-In order to call the API, you will need to know the endpoint location and API key.  Both of these, along with sample code for calling the API, is available from the [AzureML web services](https://services.azureml.net/webservices/) page.  Navigate to the desired API, and then click the "Consume" tab to find them.  Note that you can call the API as a Swagger API (i.e. with the URL parameter `format=swagger`) or as a non-Swagger API (i.e. without the `format` URL parameter).  The sample code uses the Swagger format.  Below is an example request and response in non-Swagger format.  These examples are to the seasonality endpoint.  The non-seasonality endpoint is similar.
+In order to call the API, you will need to know the endpoint location and API key.  Both of these, along with sample code for calling the API, are available from the [AzureML web services](https://services.azureml.net/webservices/) page.  Navigate to the desired API, and then click the "Consume" tab to find them.  Note that you can call the API as a Swagger API (i.e. with the URL parameter `format=swagger`) or as a non-Swagger API (i.e. without the `format` URL parameter).  The sample code uses the Swagger format.  Below is an example request and response in non-Swagger format.  These examples are to the seasonality endpoint.  The non-seasonality endpoint is similar.
 
 ### Sample Request Body
+The request contains two objects: `input1` and `GlobalParameters`.  In the example request below, some parameters are sent explicitly while others are not (scroll down for a full list of parameters for each endpoint).  Parameters that are not sent explicitly in the request will use the default values given below.
 
 	{
 		"input1": {
@@ -56,7 +57,7 @@ In order to call the API, you will need to know the endpoint location and API ke
 	}
 
 ### Sample Response
-Note that, in order to see the `ColumnNames` field, you must include `details=true` as a URL parameter in your request.
+Note that, in order to see the `ColumnNames` field, you must include `details=true` as a URL parameter in your request.  See the tables below for the meaning behind each of these fields.
 
 	{
 		"Results": {
@@ -76,7 +77,7 @@ Note that, in order to see the `ColumnNames` field, you must include `details=tr
 	}
 
 
-### Score API
+## Score API
 The Score API is used for running anomaly detection on non-seasonal time series data. The API runs a number of anomaly detectors on the data and returns their anomaly scores. 
 The figure below shows an example of anomalies that the Score API can detect. This time series has 2 distinct level changes, and 3 spikes. The red dots show the time at which the level change is detected, while the black dots show the detected spikes.
 ![Score API][1]
@@ -118,13 +119,13 @@ The API runs all detectors on your time series data and returns anomaly scores a
 | TScore |A floating number representing anomaly score on positive trend |
 | TAlert |1/0 value indicating there is a positive trend anomaly based on the input sensitivity |
 
-### ScoreWithSeasonality API
+## ScoreWithSeasonality API
 The ScoreWithSeasonality API is used for running anomaly detection on time series that have seasonal patterns. This API is useful to detect deviations in seasonal patterns.  
 The following figure shows an example of anomalies detected in a seasonal time series. The time series has one spike (the 1st black dot), two dips (the 2nd black dot and one at the end), and one level change (red dot). Note that both the dip in the middle of the time series and the level change are only discernable after seasonal components are removed from the series.
 ![Seasonality API][2]
 
 ### Detectors
-The detectors in the seasonality endpoint are similar to the ones in the non-seasonality endpoint, but with slightly different parameter names.
+The detectors in the seasonality endpoint are similar to the ones in the non-seasonality endpoint, but with slightly different parameter names (listed below).
 
 ### Parameters
 
