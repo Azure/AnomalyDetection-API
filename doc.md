@@ -89,8 +89,8 @@ The anomaly detection API supports detectors in 3 broad categories. Details on s
 | --- | --- | --- | --- | --- |
 | Spike Detectors |TSpike Detector |Detect spikes and dips based on far the values are from first and third quartiles |*tspikedetector.sensitivity:* takes integer value in the range 1-10, default: 3; Higher values will catch more extreme values thus making it less sensitive |TSpike: binary values – ‘1’ if a spike/dip is detected, ‘0’ otherwise |
 | Spike Detectors | ZSpike Detector |Detect spikes and dips based on how far the datapoints are from their mean |*zspikedetector.sensitivity:* take integer value in the range 1-10, default: 3; Higher values will catch more extreme values making it less sensitive |ZSpike: binary values – ‘1’ if a spike/dip is detected, ‘0’ otherwise | |
-| Slow Trend Detector |Slow Trend Detector |Detect slow positive trend as per the set sensitivity |*trenddetector.sensitivity:* threshold on detector score (default: 3.25, 3.25 – 5 is a reasonable range to select this from; The higher the less sensitive) |TScore: floating number representing anomaly score on trend |
-| Level Change Detectors | Bidirectional Level Change Detector |Detect both upward and downward level change as per the set sensitivity |*bileveldetector.sensitivity:* threshold on detector score (default: 3.25, 3.25 – 5 is a reasonable range to select this from; The higher the less sensitive) |RPScore: floating number representing anomaly score on upward and downward level change | |
+| Slow Trend Detector |Slow Trend Detector |Detect slow positive trend as per the set sensitivity |*trenddetector.sensitivity:* threshold on detector score (default: 3.25, 3.25 – 5 is a reasonable range to select this from; The higher the less sensitive) |tscore: floating number representing anomaly score on trend |
+| Level Change Detectors | Bidirectional Level Change Detector |Detect both upward and downward level change as per the set sensitivity |*bileveldetector.sensitivity:* threshold on detector score (default: 3.25, 3.25 – 5 is a reasonable range to select this from; The higher the less sensitive) |rpscore: floating number representing anomaly score on upward and downward level change | |
 
 ### Parameters
 More detailed information on these input parameters is listed in the table below:
@@ -114,10 +114,10 @@ The API runs all detectors on your time series data and returns anomaly scores a
 | Data |Values from raw data, or aggregated (and/or) imputed data if aggregation (and/or) missing data imputation is applied |
 | TSpike |Binary indicator to indicate whether a spike is detected by TSpike Detector |
 | ZSpike |Binary indicator to indicate whether a spike is detected by ZSpike Detector |
-| RPScore |A floating number representing anomaly score on bidirectional level change |
-| RPAlert |1/0 value indicating there is a bidirectional level change anomaly based on the input sensitivity |
-| TScore |A floating number representing anomaly score on positive trend |
-| TAlert |1/0 value indicating there is a positive trend anomaly based on the input sensitivity |
+| rpscore |A floating number representing anomaly score on bidirectional level change |
+| rpalert |1/0 value indicating there is a bidirectional level change anomaly based on the input sensitivity |
+| tscore |A floating number representing anomaly score on positive trend |
+| talert |1/0 value indicating there is a positive trend anomaly based on the input sensitivity |
 
 ## ScoreWithSeasonality API
 The ScoreWithSeasonality API is used for running anomaly detection on time series that have seasonal patterns. This API is useful to detect deviations in seasonal patterns.  
