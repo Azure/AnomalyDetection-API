@@ -837,10 +837,39 @@
                                                      "BlobUri":  "https://adcustommodules.blob.core.windows.net/custommodules/SpikeDetector.zip"
                                                  },
                                       "asset5":  {
+                                                     "Name":  "Edit Metadata",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "aml://module/506153734175476c4f62416c57734963.370b6676c11c486fbf7335349f842a66.v1-default-1742",
+                                                                          "Credentials":  ""
+                                                                      }
+                                                 },
+                                      "asset6":  {
+                                                     "Name":  "fabric1double.csv",
+                                                     "Type":  "Resource",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "https://adcustommodules.blob.core.windows.net/custommodules/fabric1double.csv",
+                                                                          "Credentials":  ""
+                                                                      },
+                                                     "OutputPorts":  {
+                                                                         "Results dataset":  {
+                                                                                                 "Type":  "Dataset"
+                                                                                             }
+                                                                     }
+                                                 },
+                                      "asset7":  {
+                                                     "Name":  "Time Series Anomaly Detection",
+                                                     "Type":  "Module",
+                                                     "LocationInfo":  {
+                                                                          "Uri":  "aml://module/506153734175476c4f62416c57734963.96b98cc050df46ffbc18c0665d69f3e3.v1-default-1743",
+                                                                          "Credentials":  ""
+                                                                      }
+                                                 },
+                                      "asset8":  {
                                                      "Name":  "Seasonality Analysis",
                                                      "Type":  "Module",
                                                      "LocationInfo":  {
-                                                                          "Uri":  "https://adcustommodules.blob.core.windows.net/custommodules/SeasonalityAnalysis.zip",
+                                                                          "Uri":  "https://adcustommodules.blob.core.windows.net/custommodules/SeasonalityAnalysis2.zip",
                                                                           "Credentials":  ""
                                                                       },
                                                      "InputPorts":  {
@@ -859,7 +888,7 @@
                                                                                                       "Type":  "Dataset"
                                                                                                   }
                                                                      },
-                                                     "Id":  "3a4a8c0191ee462fa185189f3ecd1799.86374461603743ca9e097a657200199c.v1-default-174",
+                                                     "Id":  "3a4a8c0191ee462fa185189f3ecd1799.86374461603743ca9e097a657200199c.v1-default-175",
                                                      "Parameters":  [
                                                                         {
                                                                             "Name":  "data",
@@ -913,42 +942,13 @@
                                                      "Metadata":  {
                                                                       "UseDrawBridge":  null,
                                                                       "runTimeVersionId":  "6.0",
-                                                                      "InterfaceString":  "/dll \"48f55fc9a5e64a8d91718c2a7f0df541, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.Custom._86374461603743ca9e097a657200199c.Dll.CustomModule;Run\" /Output0 {out:Dataset:Period} /Output1 {out:Dataset:ProcessedTimeSeries} /Output2 {out:Dataset:DecomposedTimeSeries} /TimeSeries {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:TimeSeries} /data \"(data:columnpicker,TimeSeries,False,Numeric,None)\" /time \"(time:columnpicker,TimeSeries,False,All,None)\" /RunSeasonality \"(RunSeasonality:bool:default,True)\" /NumSeasonalityDet \"(NumSeasonalityDet:int,1,2:default,1)\" /DeSeasonTrend \"(DeSeasonTrend:enum,none,deseason,deseasontrend:default,deseason)\" /LinearDetectThreshold \"(LinearDetectThreshold:double,2.99,5:default,3)\" /ExpoDetectThreshold \"(ExpoDetectThreshold:double,4,10:default,5)\" ",
+                                                                      "InterfaceString":  "/dll \"4c1bfdb4d1eb4e0d80ce72ffe3ced4e7, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.Custom._86374461603743ca9e097a657200199c.Dll.CustomModule;Run\" /Output0 {out:Dataset:Period} /Output1 {out:Dataset:ProcessedTimeSeries} /Output2 {out:Dataset:DecomposedTimeSeries} /TimeSeries {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:TimeSeries} /data \"(data:columnpicker,TimeSeries,False,Numeric,None)\" /time \"(time:columnpicker,TimeSeries,False,All,None)\" /RunSeasonality \"(RunSeasonality:bool:default,True)\" /NumSeasonalityDet \"(NumSeasonalityDet:int,1,2:default,1)\" /DeSeasonTrend \"(DeSeasonTrend:enum,none,deseason,deseasontrend:default,deseason)\" /LinearDetectThreshold \"(LinearDetectThreshold:double,2.99,5:default,3)\" /ExpoDetectThreshold \"(ExpoDetectThreshold:double,4,10:default,5)\" ",
                                                                       "Description":  "Analyze input time series and output data period (if data period == 1, means no significant seasonality detected). Also output seasonally adjusted time series if SeasonalAdjust is set to TRUE and significant seasonality has been detected",
                                                                       "hostVersionId":  "3.1.0",
                                                                       "host":  "R",
                                                                       "FamilyId":  "86374461603743ca9e097a657200199c"
                                                                   },
-                                                     "BlobUri":  "https://adcustommodules.blob.core.windows.net/custommodules/SeasonalityAnalysis.zip"
-                                                 },
-                                      "asset6":  {
-                                                     "Name":  "Edit Metadata",
-                                                     "Type":  "Module",
-                                                     "LocationInfo":  {
-                                                                          "Uri":  "aml://module/506153734175476c4f62416c57734963.370b6676c11c486fbf7335349f842a66.v1-default-1742",
-                                                                          "Credentials":  ""
-                                                                      }
-                                                 },
-                                      "asset7":  {
-                                                     "Name":  "fabric1double.csv",
-                                                     "Type":  "Resource",
-                                                     "LocationInfo":  {
-                                                                          "Uri":  "https://adcustommodules.blob.core.windows.net/custommodules/fabric1double.csv",
-                                                                          "Credentials":  ""
-                                                                      },
-                                                     "OutputPorts":  {
-                                                                         "Results dataset":  {
-                                                                                                 "Type":  "Dataset"
-                                                                                             }
-                                                                     }
-                                                 },
-                                      "asset8":  {
-                                                     "Name":  "Time Series Anomaly Detection",
-                                                     "Type":  "Module",
-                                                     "LocationInfo":  {
-                                                                          "Uri":  "aml://module/506153734175476c4f62416c57734963.96b98cc050df46ffbc18c0665d69f3e3.v1-default-1743",
-                                                                          "Credentials":  ""
-                                                                      }
+                                                     "BlobUri":  "https://adcustommodules.blob.core.windows.net/custommodules/SeasonalityAnalysis2.zip"
                                                  }
                                   },
                        "Parameters":  {
@@ -1097,18 +1097,6 @@
                                                      "node5":  {
                                                                    "AssetId":  "asset5",
                                                                    "Parameters":  {
-                                                                                      "data":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnIndexes%22%2C%22columns%22%3A%5B%222%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
-                                                                                      "time":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnIndexes%22%2C%22columns%22%3A%5B%221%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
-                                                                                      "RunSeasonality":  "False",
-                                                                                      "NumSeasonalityDet":  "1",
-                                                                                      "DeSeasonTrend":  "deseason",
-                                                                                      "LinearDetectThreshold":  "3",
-                                                                                      "ExpoDetectThreshold":  "5"
-                                                                                  }
-                                                               },
-                                                     "node6":  {
-                                                                   "AssetId":  "asset6",
-                                                                   "Parameters":  {
                                                                                       "Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnIndexes%22%2C%22columns%22%3A%5B%221%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
                                                                                       "Data Type":  "DateTime",
                                                                                       "Categorical":  "Unchanged",
@@ -1116,8 +1104,8 @@
                                                                                       "New Column Name":  "Time"
                                                                                   }
                                                                },
-                                                     "node7":  {
-                                                                   "AssetId":  "asset6",
+                                                     "node6":  {
+                                                                   "AssetId":  "asset5",
                                                                    "Parameters":  {
                                                                                       "Column":  "%7B%22isFilter%22%3Afalse%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%2C%22Data.x%22%2C%22Anomaly.score.x%22%2C%22Alert.indicator.x%22%2C%22Anomaly.score.y%22%2C%22Alert.indicator.y%22%2C%22Anomaly.score%22%2C%22Alert.indicator%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
                                                                                       "Data Type":  "Unchanged",
@@ -1126,8 +1114,8 @@
                                                                                       "New Column Name":  "OriginalData,ProcessedData,BiLevelChangeScore,BiLevelChangeAlert, PosTrendScore,PosTrendAlert,NegTrendScore,NegTrendAlert"
                                                                                   }
                                                                },
-                                                     "node8":  {
-                                                                   "AssetId":  "asset8",
+                                                     "node7":  {
+                                                                   "AssetId":  "asset7",
                                                                    "Parameters":  {
                                                                                       "Data Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
                                                                                       "Time Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
@@ -1138,8 +1126,8 @@
                                                                                       "Alert Threshold":  "3.25"
                                                                                   }
                                                                },
-                                                     "node9":  {
-                                                                   "AssetId":  "asset8",
+                                                     "node8":  {
+                                                                   "AssetId":  "asset7",
                                                                    "Parameters":  {
                                                                                       "Data Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
                                                                                       "Time Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
@@ -1150,20 +1138,32 @@
                                                                                       "Alert Threshold":  "3.25"
                                                                                   }
                                                                },
+                                                     "node9":  {
+                                                                   "AssetId":  "asset7",
+                                                                   "Parameters":  {
+                                                                                      "Data Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Time Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                                                                                      "Martingale Type":  "PowerAvg",
+                                                                                      "Strangeness Function Type":  "SlowNegTrend",
+                                                                                      "Length of Martingale History":  "500",
+                                                                                      "Length of Strangeness Value History":  "500",
+                                                                                      "Alert Threshold":  "3.25"
+                                                                                  }
+                                                               },
                                                      "node10":  {
                                                                     "AssetId":  "asset8",
                                                                     "Parameters":  {
-                                                                                       "Data Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
-                                                                                       "Time Column":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
-                                                                                       "Martingale Type":  "PowerAvg",
-                                                                                       "Strangeness Function Type":  "SlowNegTrend",
-                                                                                       "Length of Martingale History":  "500",
-                                                                                       "Length of Strangeness Value History":  "500",
-                                                                                       "Alert Threshold":  "3.25"
+                                                                                       "data":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnIndexes%22%2C%22columns%22%3A%5B%222%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+                                                                                       "time":  "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnIndexes%22%2C%22columns%22%3A%5B%221%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+                                                                                       "RunSeasonality":  "False",
+                                                                                       "NumSeasonalityDet":  "1",
+                                                                                       "DeSeasonTrend":  "deseason",
+                                                                                       "LinearDetectThreshold":  "3",
+                                                                                       "ExpoDetectThreshold":  "5"
                                                                                    }
                                                                 },
                                                      "node11":  {
-                                                                    "AssetId":  "asset7"
+                                                                    "AssetId":  "asset6"
                                                                 },
                                                      "node12":  {
                                                                     "InputId":  "input1"
@@ -1188,13 +1188,13 @@
                                                      {
                                                          "SourceNodeId":  "node2",
                                                          "SourcePortId":  "data_out",
-                                                         "TargetNodeId":  "node5",
+                                                         "TargetNodeId":  "node10",
                                                          "TargetPortId":  "TimeSeries"
                                                      },
                                                      {
                                                          "SourceNodeId":  "node3",
                                                          "SourcePortId":  "Results dataset",
-                                                         "TargetNodeId":  "node7",
+                                                         "TargetNodeId":  "node6",
                                                          "TargetPortId":  "Dataset"
                                                      },
                                                      {
@@ -1205,65 +1205,65 @@
                                                      },
                                                      {
                                                          "SourceNodeId":  "node5",
-                                                         "SourcePortId":  "ProcessedTimeSeries",
-                                                         "TargetNodeId":  "node4",
-                                                         "TargetPortId":  "data"
-                                                     },
-                                                     {
-                                                         "SourceNodeId":  "node5",
-                                                         "SourcePortId":  "ProcessedTimeSeries",
-                                                         "TargetNodeId":  "node8",
-                                                         "TargetPortId":  "Dataset"
-                                                     },
-                                                     {
-                                                         "SourceNodeId":  "node5",
-                                                         "SourcePortId":  "ProcessedTimeSeries",
-                                                         "TargetNodeId":  "node9",
-                                                         "TargetPortId":  "Dataset"
-                                                     },
-                                                     {
-                                                         "SourceNodeId":  "node5",
-                                                         "SourcePortId":  "ProcessedTimeSeries",
-                                                         "TargetNodeId":  "node10",
-                                                         "TargetPortId":  "Dataset"
-                                                     },
-                                                     {
-                                                         "SourceNodeId":  "node6",
                                                          "SourcePortId":  "Results dataset",
                                                          "TargetNodeId":  "node2",
                                                          "TargetPortId":  "data_in"
                                                      },
                                                      {
-                                                         "SourceNodeId":  "node8",
+                                                         "SourceNodeId":  "node7",
                                                          "SourcePortId":  "Results dataset",
                                                          "TargetNodeId":  "node1",
                                                          "TargetPortId":  "data_in2"
                                                      },
                                                      {
-                                                         "SourceNodeId":  "node9",
+                                                         "SourceNodeId":  "node8",
                                                          "SourcePortId":  "Results dataset",
                                                          "TargetNodeId":  "node1",
                                                          "TargetPortId":  "data_in3"
                                                      },
                                                      {
-                                                         "SourceNodeId":  "node10",
+                                                         "SourceNodeId":  "node9",
                                                          "SourcePortId":  "Results dataset",
                                                          "TargetNodeId":  "node1",
                                                          "TargetPortId":  "data_in4"
                                                      },
                                                      {
+                                                         "SourceNodeId":  "node10",
+                                                         "SourcePortId":  "ProcessedTimeSeries",
+                                                         "TargetNodeId":  "node4",
+                                                         "TargetPortId":  "data"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node10",
+                                                         "SourcePortId":  "ProcessedTimeSeries",
+                                                         "TargetNodeId":  "node7",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node10",
+                                                         "SourcePortId":  "ProcessedTimeSeries",
+                                                         "TargetNodeId":  "node8",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
+                                                         "SourceNodeId":  "node10",
+                                                         "SourcePortId":  "ProcessedTimeSeries",
+                                                         "TargetNodeId":  "node9",
+                                                         "TargetPortId":  "Dataset"
+                                                     },
+                                                     {
                                                          "SourceNodeId":  "node11",
                                                          "SourcePortId":  "Results dataset",
-                                                         "TargetNodeId":  "node6",
+                                                         "TargetNodeId":  "node5",
                                                          "TargetPortId":  "Dataset"
                                                      },
                                                      {
                                                          "SourceNodeId":  "node12",
-                                                         "TargetNodeId":  "node6",
+                                                         "TargetNodeId":  "node5",
                                                          "TargetPortId":  "Dataset"
                                                      },
                                                      {
-                                                         "SourceNodeId":  "node7",
+                                                         "SourceNodeId":  "node6",
                                                          "SourcePortId":  "Results dataset",
                                                          "TargetNodeId":  "node13"
                                                      }
@@ -1274,6 +1274,14 @@
                                                                                                "Description":  "detectors.historywindow",
                                                                                                "Links":  [
                                                                                                              {
+                                                                                                                 "NodeId":  "node7",
+                                                                                                                 "ParameterKey":  "Length of Martingale History"
+                                                                                                             },
+                                                                                                             {
+                                                                                                                 "NodeId":  "node7",
+                                                                                                                 "ParameterKey":  "Length of Strangeness Value History"
+                                                                                                             },
+                                                                                                             {
                                                                                                                  "NodeId":  "node8",
                                                                                                                  "ParameterKey":  "Length of Martingale History"
                                                                                                              },
@@ -1287,14 +1295,6 @@
                                                                                                              },
                                                                                                              {
                                                                                                                  "NodeId":  "node9",
-                                                                                                                 "ParameterKey":  "Length of Strangeness Value History"
-                                                                                                             },
-                                                                                                             {
-                                                                                                                 "NodeId":  "node10",
-                                                                                                                 "ParameterKey":  "Length of Martingale History"
-                                                                                                             },
-                                                                                                             {
-                                                                                                                 "NodeId":  "node10",
                                                                                                                  "ParameterKey":  "Length of Strangeness Value History"
                                                                                                              }
                                                                                                          ]
@@ -1334,7 +1334,7 @@
                                                                                           "Description":  "seasonality.enable",
                                                                                           "Links":  [
                                                                                                         {
-                                                                                                            "NodeId":  "node5",
+                                                                                                            "NodeId":  "node10",
                                                                                                             "ParameterKey":  "RunSeasonality"
                                                                                                         }
                                                                                                     ]
@@ -1344,7 +1344,7 @@
                                                                                                   "Description":  "seasonality.numSeasonality",
                                                                                                   "Links":  [
                                                                                                                 {
-                                                                                                                    "NodeId":  "node5",
+                                                                                                                    "NodeId":  "node10",
                                                                                                                     "ParameterKey":  "NumSeasonalityDet"
                                                                                                                 }
                                                                                                             ]
@@ -1354,7 +1354,7 @@
                                                                                              "Description":  "seasonality.transform",
                                                                                              "Links":  [
                                                                                                            {
-                                                                                                               "NodeId":  "node5",
+                                                                                                               "NodeId":  "node10",
                                                                                                                "ParameterKey":  "DeSeasonTrend"
                                                                                                            }
                                                                                                        ]
@@ -1374,7 +1374,7 @@
                                                                                                     "Description":  "negtrenddetector.sensitivity",
                                                                                                     "Links":  [
                                                                                                                   {
-                                                                                                                      "NodeId":  "node10",
+                                                                                                                      "NodeId":  "node9",
                                                                                                                       "ParameterKey":  "Alert Threshold"
                                                                                                                   }
                                                                                                               ]
@@ -1384,7 +1384,7 @@
                                                                                                    "Description":  "bileveldetector.sensitivity",
                                                                                                    "Links":  [
                                                                                                                  {
-                                                                                                                     "NodeId":  "node8",
+                                                                                                                     "NodeId":  "node7",
                                                                                                                      "ParameterKey":  "Alert Threshold"
                                                                                                                  }
                                                                                                              ]
@@ -1394,7 +1394,7 @@
                                                                                                     "Description":  "postrenddetector.sensitivity",
                                                                                                     "Links":  [
                                                                                                                   {
-                                                                                                                      "NodeId":  "node9",
+                                                                                                                      "NodeId":  "node8",
                                                                                                                       "ParameterKey":  "Alert Threshold"
                                                                                                                   }
                                                                                                               ]
@@ -1464,17 +1464,17 @@
                                                                        "tspikedetector.sensitivity":  3.0,
                                                                        "zspikedetector.sensitivity":  3.0,
                                                                        "detectors.spikesdips":  "Both",
-                                                                       "seasonality.enable":  false,
-                                                                       "seasonality.numSeasonality":  1,
-                                                                       "seasonality.transform":  "deseason",
                                                                        "detectors.historywindow":  500,
                                                                        "bileveldetector.sensitivity":  3.25,
                                                                        "postrenddetector.sensitivity":  3.25,
-                                                                       "negtrenddetector.sensitivity":  3.25
+                                                                       "negtrenddetector.sensitivity":  3.25,
+                                                                       "seasonality.enable":  false,
+                                                                       "seasonality.numSeasonality":  1,
+                                                                       "seasonality.transform":  "deseason"
                                                                    }
                                           }
                    }
-            }
+          }
     ],
   "outputs": {
     "mlWebServiceName": {
